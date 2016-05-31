@@ -8,23 +8,23 @@
     .factory('Estoque', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/stockproduct/search');
+                return $http.get('https://177.220.84.111:8443/purplefitness/rest/stockproduct/search');
                 
             },
             add:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/stockproduct/add', {
+                return $http.post('https://177.220.84.111:8443/purplefitness/rest/stockproduct/add', {
                         title:item.title,
                         identifier:Date.now()
                 });
             },
             update:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/stockproduct/update', {
+                return $http.post('https://177.220.84.111:8443/purplefitness/rest/stockproduct/update', {
                         title:item.title,
                         identifier:item.identifier
                 });
             },
             remove:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/stockproduct/remove', {
+                return $http.post('https://177.220.84.111:8443/purplefitness/rest/stockproduct/remove', {
                         title:item.title,
                         identifier:item.identifier
                 });
@@ -35,11 +35,11 @@
     .factory('Estoque_ES', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/stockitem/search');
+                return $http.get('https://177.220.84.111:8443/purplefitness/rest/stockitem/search');
                 
             },
             add:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/stockitem/add', {
+                return $http.post('https://177.220.84.111:8443/purplefitness/rest/stockitem/add', {
                         identifierStock:item.identifierStock,
                         identifierProduct:item.identifierProduct,
                         quantity:item.quantity,
@@ -47,7 +47,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/stockitem/remove', {
+                return $http.post('https://177.220.84.111:8443/purplefitness/rest/stockitem/remove', {
                         identifierStock:item.identifierStock,
                         identifierProduct:item.identifierProduct,
                         quantity:item.quantity,
@@ -60,7 +60,7 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/product/search');
+                return $http.get('https://177.220.84.111:8443/purplefitness/rest/product/search');
                 
             }
         };
@@ -76,7 +76,7 @@
         });
         Estoque_ES.getAll().then(function(response) {
             $scope.estoques_es = response.data;
-            console.log($scope.estoques_es);
+            console.log('esse', $scope.estoques_es);
         }, function(response) {
             console.log(response);
         });
@@ -89,10 +89,16 @@
         $scope.currentPesquisa = '';
         $scope.tela_estoque = true;
         $scope.tela_entrada_saida = false;
-        $scope.gerenciar_estoque = function(tipo_estoque){ 
+        $scope.gerenciar_estoque = function(tipo_estoque, identificador){ 
             $scope.tela_estoque = false;
             $scope.tela_entrada_saida = true;
-            $scope.currentEstoque = tipo_estoque;          
+            $scope.currentEstoque = tipo_estoque; 
+            $scope.currentEstoqueIdentifier = identificador;
+            for(var i=0; i < $scope.estoques_es.length; i++) {
+                if($scope.estoques_es[i].identifierStock === $scope.currentEstoqueIdentifier) {
+                    $scope.estoques_es[i].show = true;
+                }
+            }
         }
         $scope.voltar_estoque = function(){ 
             $scope.tela_estoque = true;
@@ -155,10 +161,14 @@
                 $scope.estoques.push();
             });
         }
+
+        $scope.estoques_es = [];
         $scope.atualiza_entrada = function(estoque_es){
             if($scope.estoqueESForm.$valid){
                 if(!estoque_es.identifier)
                     estoque_es.identifier = Date.now(); //não sei se dará certo!
+                    $scope.estoque_es.identifierStock=$scope.currentEstoqueIdentifier;
+                    console.log(estoque_es);
                 Estoque_ES.add(estoque_es).then(function(response) {
                     estoque_es.identifier = response.data.identifier;
                     $scope.estoques_es.push(estoque_es);
@@ -175,9 +185,10 @@
             if($scope.estoqueESForm.$valid){
                 Estoque_ES.remove(estoque_es).then(function(response) {
                     $scope.estoques_es.push(estoque_es);
-                     toastr.success('Item removido com sucesso', 'Sucesso');
+                    toastr.success('Item removido com sucesso', 'Sucesso');
                 },function() {
                         toastr.error('Erro ao remover item', 'Erro');
+
                     });
                 $('#estoqueESModal').modal('hide');         
             } else {

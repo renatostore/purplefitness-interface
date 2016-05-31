@@ -75,7 +75,7 @@
 										<a ng-click="showWindow(estoque)">{{estoque.title}}</a> 
 										<i ng-click="showWindow(estoque)" class="glyphicon glyphicon-pencil linkEditar"></i>
 										<i ng-click="remove(estoque, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i>
-										<i ng-click="entrada_saida(estoque.id)" class="glyphicon glyphicon-sort button_estoque_es"></i><br/>
+										<i ng-click="gerenciar_estoque(estoque.title, estoque.identifier)" class="glyphicon glyphicon-sort button_estoque_es"></i><br/>
 									</td>
 								</tr>
 							</table>
@@ -145,10 +145,11 @@
 							<a href="#" ng-click="showWindowES()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Nova Entrada</a>
 							<hr>
 							<table class="table">
-								<tr ng-repeat="estoque_es in estoque_ess | filter:{search, estoque_es.identifierStock:currentEstoque}">
+								<tr ng-repeat="estoque_es in estoques_es | filter:search" ng-show="estoque_es.show">
 									<td class="item">
-										<a ng-click="showWindowES(estoque_es)" class="choser">{{estoque_es.nome}}</a> 
+										<a ng-click="showWindowES(estoque_es)" class="choser">{{estoque_es.identifier}}</a> 
 										<i ng-click="showWindowES(estoque_es)" class="glyphicon glyphicon-sort button-open"></i><br/>
+										<small>Quantidade: {{estoque_es.quantity}}</small>
 									</td>
 								</tr>
 							</table>
@@ -166,8 +167,7 @@
 								<h4 class="purple" id="myModalLabel"><span ng-if="nova_entrada">Entrada de Estoque</span><span ng-if="nova_entrada==false">Entrada e Saída de Estoque</span></h4>
 							</div>
 							<div class="modal-body">
-								<form name="estoqueESForm" id="estoqueESForm">
-								 	<input type="hidden" name="identifierStock" value="{{currentEstoque}}" ng-model="identifierStock" />
+								<form name="estoqueESForm" id="estoqueESForm">			 	
 									<p>Por favor preencha todos os campos.</p>
 									<!-- PRODUTO-->
 									 <div class="form-group">
@@ -176,7 +176,7 @@
 									    <div class="input-group-addon">
 									      <i class="glyphicon glyphicon-folder-open"></i>
 									    </div>
-									    <select ng-model="estoque_es.identifierProduct" ng-options="item.name for item in items" name="item" id="item" class="form-control">
+									    <select ng-model="estoque_es.identifierProduct" ng-options="item.identifier as item.name for item in items" name="item" id="item" class="form-control">
 									    </select>
 									  </div>
 									</div>
