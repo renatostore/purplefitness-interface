@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html ng-app="clientes">
+<head>
+<title>purpleFitness</title>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script type="text/javascript" src="js/cliente.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+</head>
+<!-- CABEÇALHO -->
+<body ng-controller="ClientesController">
+	<div class="wrapper">
+	  <header class="header header-fixed navbar container-fluid">
+	      <div class="row">
+        <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="menu.html" class="navbar-brand">
+                    <i class="glyphicon glyphicon-heart-empty"></i>
+                    <span class="heading-font">PurpleFitness</span>
+                </a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="cliente.html">Clientes</a></li>
+              <li><a href="estoque.html">Estoques</a></li>
+              <li><a href="item.html">Produtos</a></li>
+              <li><a href="consignacao.html">Consignação</a></li>
+              <li><a href="index.html">Sair</a></li>
+
+        
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+</div> <!-- /container -->
+
+	      </div>
+	  </header>
+
+	</div>
+  <!-- MENU LATERAL  -->
+  <div class="box">
+      <div class="row">
+        <div class="column col-sm-12" id="main">
+          <div class="padding">
+            <div class="full col-sm-12">
+            <!-- clienteS -->
+            <br><br><br>
+            <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                  <a class="button-search"><i class="glyphicon glyphicon-search"></i></a>
+               </div>
+                <input class="form-control" ng-model="search" type="search" ng-model="cliente.razao_social" placeholder="Pesquisar">
+            </div>
+          </div>
+             <a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Novo Cliente</a>
+             <hr>
+             <table class="table">
+              <tr ng-repeat="cliente in clientes | filter: search">
+                  <td class="item">
+                      <a ng-click="showWindow(cliente)">{{cliente.corporateName}}</a> 
+                      <i ng-click="showWindow(cliente)" class="glyphicon glyphicon-pencil linkEditar"></i>
+                      <i ng-click="remove(cliente, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i><br/>
+                       <small>CNPJ: {{cliente.cnpj}} - Endereço: {{cliente.address}} - Telefone: {{cliente.phone}}</small>
+                  </td>
+              </tr>
+          </table>
+       </div><!-- /col-9 -->
+    </div><!-- /padding -->
+</div>
+
+<!-- FORMULÁRIO DO cliente -->
+<div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close back-button" data-dismiss="modal">&times;<span class="sr-only">Close</span></button>
+        <h4 class="purple" id="myModalLabel">Cliente</h4>
+      </div>
+      <div class="modal-body">
+   <form name="clienteForm" id="clienteForm">
+  <p>Por favor preencha todos os campos.</p>
+	<!-- documento -->
+	<div class="form-group" ng-class="{'has-error':clienteForm.documento.$invalid && clienteForm.documento.$touched}">
+	  <label for="documento">CNPJ</label>
+	  <div class="input-group">
+	    <div class="input-group-addon">
+	      <i class="glyphicon glyphicon-book"></i>
+	    </div>
+	    <input ng-model="cliente.cnpj" ng-required="false" name="documento" id="documento" class="form-control" type="text" placeholder="CNPJ">
+	    <span ng-if="clienteForm.documento.$invalid && clienteForm.documento.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+	  </div>
+	  <span ng-if="clienteForm.documento.$invalid && clienteForm.documento.$touched" class="help-block">O CNPJ é requerido.</span>
+	</div>
+ <!-- razao_social -->
+<div class="form-group" ng-class="{'has-error':clienteForm.razao_social.$invalid && clienteForm.razao_social.$touched}">
+  <label for="razao_social">Razão Social</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-book"></i>
+    </div>
+    <input ng-model="cliente.corporateName" ng-required="false" name="nome" id="razao_social" class="form-control" type="text" placeholder="Razão Social">
+    <span ng-if="clienteForm.razao_social.$invalid && clienteForm.razao_social.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.razao_social.$invalid && clienteForm.razao_social.$touched" class="help-block">A Razão Social é requerida.</span>
+</div>
+ <!-- endereco -->
+<div class="form-group" ng-class="{'has-error':clienteForm.endereco.$invalid && clienteForm.endereco.$touched}">
+  <label for="endereco">Endereço</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-globe"></i>
+    </div>
+    <input ng-model="cliente.address" ng-required="false" name="endereco" id="endereco" class="form-control" type="text" placeholder="Endereço">
+    <span ng-if="clienteForm.endereco.$invalid && clienteForm.endereco.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.endereco.$invalid && clienteForm.endereco.$touched" class="help-block">O endereço é requerido.</span>
+</div>
+<!-- Bairro -->
+<div class="form-group" ng-class="{'has-error':clienteForm.bairro.$invalid && clienteForm.bairro.$touched}">
+  <label for="bairro">Bairro</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-globe"></i>
+    </div>
+    <input ng-model="cliente.bairro" ng-required="false" name="bairro" id="bairro" class="form-control" type="text" placeholder="Bairro">
+    <span ng-if="clienteForm.bairro.$invalid && clienteForm.bairro.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.bairro.$invalid && clienteForm.bairro.$touched" class="help-block">O bairro é requerido.</span>
+</div>
+<!-- Cidade -->
+<div class="form-group" ng-class="{'has-error':clienteForm.bairro.$invalid && clienteForm.bairro.$touched}">
+  <label for="cidade">Cidade</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-globe"></i>
+    </div>
+    <input ng-model="cliente.city" ng-required="false" name="cidade" id="cidade" class="form-control" type="text" placeholder="Cidade">
+    <span ng-if="clienteForm.cidade.$invalid && clienteForm.cidade.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.cidade.$invalid && clienteForm.cidade.$touched" class="help-block">A cidade é requerida.</span>
+</div>
+<!-- UF -->
+<div class="form-group" ng-class="{'has-error':clienteForm.uf.$invalid && clienteForm.uf.$touched}">
+  <label for="estado">Estado</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-globe"></i>
+    </div>
+    <input ng-model="cliente.uf" ng-required="false" name="uf" id="uf" class="form-control" type="text" placeholder="Estado">
+    <span ng-if="clienteForm.uf.$invalid && clienteForm.uf.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.uf.$invalid && clienteForm.uf.$touched" class="help-block">A UF é requerida.</span>
+</div>
+<!-- Email -->
+<div class="form-group" ng-class="{'has-error':clienteForm.email.$invalid && clienteForm.email.$touched}">
+  <label for="email">Email</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-envelope"></i>
+    </div>
+    <input ng-model="cliente.email" ng-required="false" name="email" id="email" class="form-control" type="text" placeholder="Email">
+    <span ng-if="clienteForm.email.$invalid && clienteForm.email.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.email.$invalid && clienteForm.email.$touched" class="help-block">A UF é requerida.</span>
+</div>
+ <!-- telefone -->
+<div class="form-group" ng-class="{'has-error':clienteForm.telefone.$invalid && clienteForm.telefone.$touched}">
+  <label for="telefone">Telefone</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-earphone"></i>
+    </div>
+    <input ng-model="cliente.phone" ng-required="false" name="telefone" id="telefone" class="form-control" type="text" placeholder="Telefone">
+    <span ng-if="clienteForm.telefone.$invalid && clienteForm.telefone.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="clienteForm.telefone.$invalid && clienteForm.telefone.$touched" class="help-block">A Razão Social é requerida.</span>
+</div>
+
+
+<!-- Main content here -->
+<div class="form-group">
+<div class="modal-footer">
+  <button type="button" class="btn btn-default back-button" data-dismiss="modal">Fechar</button>
+  <input ng-click="save(cliente)" type="submit" class="btn btn-purple button button-full" value="Salvar">
+</div>
+</div>
+</div>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</body>
+</html>
