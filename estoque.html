@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html ng-app="estoques">
 <head>
-	<title>purpleFitness</title>
-	<meta charset="UTF-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
-	<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
-	<script type="text/javascript" src="js/estoque.js"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!-- Latest compiled and minified JavaScript -->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+<title>purpleFitness</title>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script type="text/javascript" src="js/estoque.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
 </head>
 <!-- CABEÇALHO -->
 <body ng-controller="estoquesController">
@@ -24,14 +24,9 @@
 					<div class="container-fluid">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
+								<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 							</button>
-							<a href="menu.html" class="navbar-brand">
-								<i class="glyphicon glyphicon-heart-empty"></i>
-								<span class="heading-font">PurpleFitness</span>
+							<a href="menu.html" class="navbar-brand"> <i class="glyphicon glyphicon-heart-empty"></i> <span class="heading-font">PurpleFitness</span>
 							</a>
 						</div>
 						<div id="navbar" class="navbar-collapse collapse">
@@ -41,23 +36,28 @@
 								<li><a href="item.html">Produtos</a></li>
 								<li><a href="consignacao.html">Consignação</a></li>
 								<li><a href="index.html">Sair</a></li>
-							</ul><!--/.nav-collapse -->
-						</div><!--/.container-fluid -->
+							</ul>
+							<!--/.nav-collapse -->
+						</div>
+						<!--/.container-fluid -->
 					</div>
 				</nav>
-				</div> <!-- /container -->
 			</div>
-		</header>
+			<!-- /container -->
+	</div>
+	</header>
 	</div>
 	<!-- MENU LATERAL  -->
-		<div ng-show="tela_estoque==true">	
+	<div ng-show="tela_estoque==true">
 		<div class="box">
 			<div class="row">
 				<div class="column col-sm-12" id="main">
 					<div class="padding">
 						<div class="full col-sm-12">
 							<!-- estoqueS -->
-							<br><br><br>
+							<br>
+							<br>
+							<br>
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
@@ -66,28 +66,27 @@
 									<input class="form-control" ng-model="search" type="search" ng-model="estoque.title" placeholder="Pesquisar">
 								</div>
 							</div>
-							<a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Novo Estoque</a>
-							<br/>
+							<a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Novo Estoque</a> <br />
 							<hr>
 							<table class="table">
 								<tr ng-repeat="estoque in estoques | filter:search">
-									<td class="item">
-										<a ng-click="showWindow(estoque)">{{estoque.title}}</a> 
-										<i ng-click="showWindow(estoque)" class="glyphicon glyphicon-pencil linkEditar"></i>
-										<i ng-click="remove(estoque, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i>
-										<i ng-click="gerenciar_estoque(estoque.title, estoque.identifier)" class="glyphicon glyphicon-sort button_estoque_es"></i><br/>
-									</td>
+									<td class="item"><a ng-click="showWindow(estoque)">{{estoque.title}}</a> <i ng-click="showWindow(estoque)" class="glyphicon glyphicon-pencil linkEditar"></i> <i ng-click="remove(estoque, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i> <a ng-click="gerenciar_estoque(estoque.title, estoque.identifier)" class="button-open"><i class="glyphicon glyphicon-sort button_estoque_es"></i></a><br /></td>
 								</tr>
 							</table>
-						</div><!-- /col-12 -->
-					</div><!-- /padding -->
-				</div> <!--main-->
+						</div>
+						<!-- /col-12 -->
+					</div>
+					<!-- /padding -->
+				</div>
+				<!--main-->
 				<!-- FORMULÁRIO DO estoque -->
 				<div class="modal fade" id="estoqueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close back-button" data-dismiss="modal">&times;<span class="sr-only">Close</span></button>
+								<button type="button" class="close back-button" data-dismiss="modal">
+									&times;<span class="sr-only">Close</span>
+								</button>
 								<h4 class="purple" id="myModalLabel">Estoque</h4>
 							</div>
 							<div class="modal-body">
@@ -100,8 +99,7 @@
 											<div class="input-group-addon">
 												<i class="glyphicon glyphicon-book"></i>
 											</div>
-											<input ng-model="estoque.title" ng-required="false" name="titulo" id="titulo" class="form-control" type="text" placeholder="Título">
-											<span ng-if="estoqueForm.titulo.$invalid && estoqueForm.titulo.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+											<input ng-model="estoque.title" ng-required="false" name="titulo" id="titulo" class="form-control" type="text" placeholder="Título"> <span ng-if="estoqueForm.titulo.$invalid && estoqueForm.titulo.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
 										</div>
 										<span ng-if="estoqueForm.titulo.$invalid && estoqueForm.titulo.$touched" class="help-block">O título é requerido.</span>
 									</div>
@@ -113,27 +111,33 @@
 										</div>
 									</div>
 								</form>
-							</div> <!--modal-body-->
-						</div> <!--modal content-->
-					</div> <!--modal dialog-->
-				</div> <!--modal fade-->
-			</div><!--row-->
-		</div> <!--box-->
+							</div>
+							<!--modal-body-->
+						</div>
+						<!--modal content-->
+					</div>
+					<!--modal dialog-->
+				</div>
+				<!--modal fade-->
+			</div>
+			<!--row-->
 		</div>
+		<!--box-->
+	</div>
 
 
-<!-- ENTRADAS E SAÍDAS -->
-		<div ng-show="tela_entrada_saida==true">	
+	<!-- ENTRADAS E SAÍDAS -->
+	<div ng-show="tela_entrada_saida==true">
 		<div class="box">
 			<div class="row">
 				<div class="column col-sm-12" id="main">
 					<div class="padding">
 						<div class="full col-sm-12">
 							<!-- estoqueS -->
-							<br><br><br>
-							Entradas e Saídas do Estoque: {{currentEstoque}}
-							<a href="#" ng-click="voltar_estoque()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
-							<br><br>
+							<br>
+							<br>
+							<br> Entradas e Saídas do Estoque: {{currentEstoque}} <a href="#" ng-click="voltar_estoque()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a> <br>
+							<br>
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-addon">
@@ -146,39 +150,42 @@
 							<hr>
 							<table class="table">
 								<tr ng-repeat="estoque_es in estoques_es | filter:search" ng-show="estoque_es.show">
-									<td class="item">
-										<a ng-click="showWindowES(estoque_es)" class="choser">{{estoque_es.identifier}}</a> 
-										<i ng-click="showWindowES(estoque_es)" class="glyphicon glyphicon-sort button-open"></i><br/>
-										<small>Quantidade: {{estoque_es.quantity}}</small>
-									</td>
+									<td class="item"><a ng-click="showWindowES(estoque_es)" class="choser">{{estoque_es.identifier}}</a> <a ng-click="showWindowES(estoque_es)" class="button-openincrement"><i class="glyphicon glyphicon-sort"></i></a><br /> <small>Quantidade: {{estoque_es.quantity}}</small></td>
 								</tr>
 							</table>
-						</div><!-- /col-12 -->
-					</div><!-- /padding -->
-				</div> <!--main-->
+						</div>
+						<!-- /col-12 -->
+					</div>
+					<!-- /padding -->
+				</div>
+				<!--main-->
 				<!-- FORMULÁRIO DO estoque -->
-		
 
-					<div class="modal fade" id="estoqueESModal" tabindex="-1" role="dialog" aria-labelledby="myModalESLabel" aria-hidden="true">
+
+				<div class="modal fade" id="estoqueESModal" tabindex="-1" role="dialog" aria-labelledby="myModalESLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close back-button" data-dismiss="modal">&times;<span class="sr-only">Close</span></button>
-								<h4 class="purple" id="myModalLabel"><span ng-if="nova_entrada">Entrada de Estoque</span><span ng-if="nova_entrada==false">Entrada e Saída de Estoque</span></h4>
+								<button type="button" class="close back-button" data-dismiss="modal">
+									&times;<span class="sr-only">Close</span>
+								</button>
+								<h4 class="purple" id="myModalLabel">
+									<span ng-if="nova_entrada">Entrada de Estoque</span><span ng-if="nova_entrada==false">Entrada e Saída de Estoque</span>
+								</h4>
 							</div>
 							<div class="modal-body">
-								<form name="estoqueESForm" id="estoqueESForm">			 	
+								<form name="estoqueESForm" id="estoqueESForm">
 									<p>Por favor preencha todos os campos.</p>
 									<!-- PRODUTO-->
-									 <div class="form-group">
-									  <label for="item">Item</label>
-									  <div class="input-group">
-									    <div class="input-group-addon">
-									      <i class="glyphicon glyphicon-folder-open"></i>
-									    </div>
-									    <select ng-model="estoque_es.identifierProduct" ng-options="item.identifier as item.name for item in items" name="item" id="item" class="form-control">
-									    </select>
-									  </div>
+									<div class="form-group">
+										<label for="item">Item</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="glyphicon glyphicon-folder-open"></i>
+											</div>
+											<select ng-model="estoque_es.identifierProduct" ng-options="item.identifier as item.name for item in items" name="item" id="item" class="form-control">
+											</select>
+										</div>
 									</div>
 									<!-- quantidade -->
 									<div class="form-group" ng-class="{'has-error':estoqueESForm.quantidade.$invalid && estoqueESForm.quantidade.$touched}">
@@ -187,8 +194,7 @@
 											<div class="input-group-addon">
 												<i class="glyphicon glyphicon-book"></i>
 											</div>
-											<input ng-model="estoque_es.quantity" ng-required="false" name="quantidade" id="quantidade" class="form-control" type="text" placeholder="Quantidade">
-											<span ng-if="estoqueESForm.quantidade.$invalid && estoqueESForm.quantidade.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+											<input ng-model="estoque_es.quantity" ng-required="false" name="quantidade" id="quantidade" class="form-control" type="text" placeholder="Quantidade"> <span ng-if="estoqueESForm.quantidade.$invalid && estoqueESForm.quantidade.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
 										</div>
 										<span ng-if="estoqueESForm.quantidade.$invalid && estoqueESForm.quantidade.$touched" class="help-block">A quantidade é requerida.</span>
 									</div>
@@ -196,18 +202,22 @@
 									<div class="form-group">
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default button-cancel" data-dismiss="modal">Fechar</button>
-											<input ng-click="atualiza_entrada(estoque_es)" type="submit" class="btn btn-purple button-increment" value="Entrada">
-											<input ng-if="nova_entrada==false" ng-click="atualiza_saida(estoque_es)" type="submit" class="btn btn-purple button-decrement" value="Saida">
+											<input ng-click="atualiza_entrada(estoque_es)" type="submit" class="btn btn-purple button-increment" value="Entrada"> <input ng-if="nova_entrada==false" ng-click="atualiza_saida(estoque_es)" type="submit" class="btn btn-purple button-decrement" value="Saida">
 										</div>
 									</div>
 								</form>
-							</div> <!--modal-body-->
-						</div> <!--modal content-->
-					</div> <!--modal dialog-->
+							</div>
+							<!--modal-body-->
+						</div>
+						<!--modal content-->
+					</div>
+					<!--modal dialog-->
 
-				</div> <!--modal fade-->
-			</div><!--row-->
-		</div> <!--box-->
+				</div>
+				<!--modal fade-->
+			</div>
+			<!--row-->
 		</div>
-	</body>
-
+		<!--box-->
+	</div>
+</body>
