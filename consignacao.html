@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html ng-app="vamosnessa">
+<head>
+	<title>purpleFitness</title>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+	<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+	<script type="text/javascript" src="angucomplete-alt.min.js"></script>
+	<script type="text/javascript" src="consignacao.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+	<style type="text/css">
+		.angucomplete-dropdown {
+		    position: absolute;
+		    z-index: 100;
+		    width: 90%;
+		}
+		.angucomplete-row, .angucomplete-searching {
+		    padding: 10px;
+		    background-color: white;
+		    border-radius: 0 0 5px 5px;
+		    border: 1px solid #ddd;
+		    cursor: pointer;
+		}
+		.angucomplete-row:hover {
+		    background-color: #dedede;
+		}
+	</style>
+</head>
+<!-- CABEÇALHO -->
+<body ng-controller="consignacaoController">
+	<div class="wrapper">
+		<header class="header header-fixed navbar container-fluid">
+			<div class="row">
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a href="menu.html" class="navbar-brand">
+								<i class="glyphicon glyphicon-heart-empty"></i>
+								<span class="heading-font">PurpleFitness</span>
+							</a>
+						</div>
+						<div id="navbar" class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+								<li><a href="cliente.html">Clientes</a></li>
+								<li><a href="estoque.html">Estoques</a></li>
+								<li><a href="item.html">Produtos</a></li>
+								<li class="active"><a href="consignacao.html">Consignação</a></li>
+								<li><a href="index.html">Sair</a></li>
+							</ul><!--/.nav-collapse -->
+						</div><!--/.container-fluid -->
+					</div>
+				</nav>
+				</div> <!-- /container -->
+			</div>
+		</header>
+	</div>
+	<!-- MENU LATERAL  -->
+		
+	<div class="box">
+		<div class="row">
+			<div class="column col-sm-12" id="main">
+				<div class="padding">
+					<div class="full col-sm-12">
+							<!-- consignacao -->
+							<br><br><br>
+							<a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Nova Consignação</a>
+							<br/>
+							<hr>
+							<table class="table">
+								<tr ng-repeat="c in consignacoes"> 
+                                    <td class="item"> 
+                                        <a ng-click="showWindow(c)">{{c.customerTO.corporateName}}</a>  
+                                        <a ng-click="showWindow(c)" class="glyphicon glyphicon-pencil linkEditar"></a> 
+                                        <a ng-click="showWindow(c,1)" class="glyphicon glyphicon-save baixa consig linkBaixa"></a> 
+                                        <br><small>Data: {{c.finalDate}}</small> 
+                                    </td> 
+                                </tr>
+							</table>
+						</div><!-- /col-12 -->
+					</div><!-- /padding -->
+				</div> <!--main-->
+				<!-- FORMULÁRIO DO estoque -->
+				<div class="modal fade" id="consignacaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close back-button" data-dismiss="modal">&times;<span class="sr-only">Close</span></button>
+								<h4 class="purple" id="myModalLabel">Consignação</h4>
+							</div>
+							<div class="modal-body">
+								<form name="consignacaoForm" id="consignacaoForm">
+									<div ng-show="dar_baixa==false">
+									<p>Por favor preencha todos os campos.</p>
+									<!-- cliente -->
+									<div class="form-group" ng-class="{'has-error':consignacaoForm.cliente.$invalid && consignacaoForm.cliente.$touched}">
+										<label for="cliente">Cliente</label>
+
+										<angucomplete-alt
+								      id="angucomplete-cliente"
+							              placeholder="Cliente"
+							              pause="300"
+							              selected-object="consignacao.customerTO"
+							              local-data="clientes"
+							              local-search="filtroClientesForm"
+							              title-field="corporateName"
+							              description-field="cnpj"
+							              minlength="1"
+							              input-class="form-control form-control-small"
+							              match-class="highlight" />
+
+									</div>
+									<!-- data -->
+									<div class="form-group"  style="padding-right:0" ng-class="{'has-error':consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched}">
+										<label for="data">Data da Devolução</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</div>
+											<input ng-model="consignacao.finalDate" ng-required="false" name="data" id="finalDate" class="form-control" type="text" placeholder="Data da Devolução">
+											<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
+										</div>
+										<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="help-block">A data da devolição é requerida.</span>
+									</div>
+									<!-- estoque -->
+									<div class="form-group" style="padding-left:0" ng-class="{'has-error':consignacaoForm.estoque.$invalid && consignacaoForm.estoque.$touched}">
+										<label for="estoque">Estoque</label>
+										<angucomplete-alt
+								      id="angucomplete-estoque"
+							              placeholder="Estoque"
+							              pause="300"
+							              selected-object="consignacao.stockProductTO"
+							              local-data="estoques"
+							              local-search="filtroEstoquesForm"
+							              title-field="title"
+							              minlength="1"
+							              input-class="form-control form-control-small"
+							              match-class="highlight" />
+									</div>
+									
+									<!-- item -->
+									<div class="form-group column"  style="padding-left:0" ng-class="{'has-error':consignacaoForm.item.$invalid && consignacaoForm.item.$touched}">
+										<label for="item">Item</label>
+										
+										<angucomplete-alt
+								      id="angucomplete-item"
+							              placeholder="Itens"
+							              pause="300"
+							              selected-object="itemSelecionado"
+							              local-data="items"
+							              local-search="filtroItensForm"
+							              title-field="name"
+							              minlength="1"
+							              input-class="form-control form-control-small"
+							              match-class="highlight" />
+									</div>
+									<!-- quantidade -->
+									<div class="form-group column"  ng-class="{'has-error':consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched}">
+										<label for="quantidadeItem">Quantidade</label>
+										<div class="input-group">
+											<input ng-model="consignacao.quantidadeItem" ng-required="false" name="quantidadeItem" id="quantidadeItem" class="form-control" type="text" placeholder="">
+											<span ng-if="consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
+										</div>
+									</div>
+									<!-- Botão ADD-->
+									<div class="form-group column col-sm-4" style="padding-right:0">
+										<button ng-click="addItem()" class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span> Adicionar</button>
+									</div>
+									
+
+									<table width="100%">
+										<tr>
+											<th>Produto</th>
+											<th>Quantidade</th>
+											<th>Valor Unitário</th>
+											<th>Total</th>
+										</tr>
+										<tr ng-repeat="item in consignacao.consignmentItemsTO">
+											<td>{{item.productTO.name}}</td>
+											<td>{{item.quantity}}</td>
+											<td>{{item.productTO.price | currency:"R$ ":2}}</td>
+											<td>{{item.productTO.price * item.quantity | currency:"R$ ":2}}</td>
+										</tr>
+										<tr>
+											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.consignmentItemsTO) | currency:"R$ ":2}}</b></td>
+										</tr>
+									</table>
+									<!-- Main content here -->
+									<div class="form-group">
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default back-button" data-dismiss="modal">Fechar</button>
+											<input ng-click="save(consignacao)" type="submit" class="btn btn-purple button button-full" value="Salvar">
+										</div>
+									</div>
+									</div>
+									<div ng-show="dar_baixa">
+										<h3>{{consignacao.customerTO.corporateName}}</h3>
+										Lista de Produtos <br><br>
+									<table width="100%">
+										<tr>
+											<th>Produto</th>
+											<th>Quantidade</th>
+											<th>Valor Unitário</th>
+											<th>Total</th>
+										</tr>
+										<tr ng-repeat="item in consignacao.consignmentItemsTO">
+											<td>{{item.productTO.name}}</td>
+											<td>{{item.quantity}}</td>
+											<td>{{item.productTO.price | currency:"R$ ":2}}</td>
+											<td>{{item.productTO.price * item.quantity | currency:"R$ ":2}}</td>
+										</tr>
+										<tr>
+											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.consignmentItemsTO) | currency:"R$ ":2}}</b></td>
+										</tr>
+									</table>
+										<input ng-click="baixa(consignacao)" type="submit" class="btn btn-purple button linkBaixa" value="Dar Baixa">
+									</div>
+								</form>
+							</div> <!--modal-body-->
+						</div> <!--modal content-->
+					</div> <!--modal dialog-->
+				</div> <!--modal fade-->
+			</div><!--row-->
+		</div> <!--box-->
+</body>
+</html>
+
