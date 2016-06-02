@@ -1,10 +1,3 @@
-/**
- * { client: { name: 'José', document: 'dasa', identifier: 1235534 }, stock: {
- * titulo: 'varejo' identifier: 12421432 }, items: [ { identifier:2314243,
- * quantidade:2 },{ identifier:2341234, quantidade:3 } ], date: 24134213434 }
- *  { clientId: 231442341, stockId: 1243243, items: [], date: 23414234321 }
- */
-
 (function() {
 	"use strict";
 
@@ -21,26 +14,20 @@
 	.factory('Consignacao', function($http) {
 		return {
 			clear : function(item) {
-				for (var i = 0; i < item.consignmentItemsTO.length; i++) {
-					if (item.consignmentItemsTO[i].productTO)
-						delete item.consignmentItemsTO[i].productTO.title;
-				}
-
 				var data = {
 					customerTO : item.customerTO,
-					stockProductTO : item.stockProductTO,
+					stockItemConsignmentsTO : item.stockItemConsignmentsTO,
 					finalDate : item.finalDate,
-					consignmentItemsTO : item.consignmentItemsTO
+					customerTO : item.customerTO
 				};
+				
 				if (data.customerTO.originalObject)
 					data.customerTO = data.customerTO.originalObject;
-				if (data.stockProductTO.originalObject)
-					data.stockProductTO = data.stockProductTO.originalObject;
+					
 				return data;
 			},
 			getAll : function() {
 				return $http.get('https://localhost:8443/purplefitness/rest/consignment/search');
-
 			},
 			add : function(item) {
 				var data = this.clear(item);
@@ -64,9 +51,18 @@
 
 	.factory('Item', function($http) {
 		return {
-			getAll : function() {
-				return $http.get('https://localhost:8443/purplefitness/rest/product/search');
-
+			getAll : function(estoqueId) {
+				var items = $http.get('https://localhost:8443/purplefitness/rest/stockitem/search');
+								
+				if(estoqueId) {
+					for(var i=0; i<items.length; i++) {
+						if(items[i].identifierStock != estoqueId) {
+						    delete items[i];
+						}
+					}
+				}
+				
+				return items;
 			}
 		};
 	})
@@ -88,7 +84,7 @@
 
 			var sum = 0;
 			for (var i = 0; i < items.length; i++) {
-				sum += items[i].productTO.price * items[i].quantity;
+				sum += items[i].price * items[i].quantity;
 			}
 
 			return sum;
@@ -114,29 +110,50 @@
 		});
 
 		/*
-		 * $scope.estoques = [ {identifier:1,title:'varejo'},
-		 * {identifier:1,title:'atacado'}, ];
-		 * 
-		 * $scope.clientes = [ {identifier:1,corporateName:'José', cnpj:
-		 * '000.000.000-00'}, {identifier:2,corporateName:'Raimundo', cnpj:
-		 * '000.000.000-00'}, {identifier:3,corporateName:'Oliveira', cnpj:
-		 * '000.000.000-00'}, {identifier:4,corporateName:'Maldonato', cnpj:
-		 * '000.000.000-00'}, {identifier:5,corporateName:'Rosario', cnpj:
-		 * '000.000.000-00'} ];
-		 * 
-		 * $scope.items = [ {identifier:1,name:'Camiseta Florida', price:'50'},
-		 * {identifier:1,name:'Calça Jeans', price:'30'}, ];
-		 * 
-		 * $scope.consignacoes = [ { "name":"ZXCVB", "identifier":"ASDF",
-		 * "initialDate":"20/01/2010", "finalDate":"01/01/2010",
-		 * "stockProductTO":{ "title":"Atacado", "identifier":"1464711363409" },
-		 * "consignmentItemsTO":[ { "identifier":"QWERT", "productTO":{
-		 * "name":"teste1", "identifier":"1464558313428", "price":"15",
-		 * "unity":"UN" }, "quantity":"20" } ], "customerTO":{
-		 * "identifier":"1464721432724", "corporateName":"jose",
-		 * "cnpj":"123123213", "address":"rua x", "phone":"19111111111",
-		 * "bairro":"sao joao", "city":"campinas", "uf":"SP",
-		 * "email":"jose@gmail.com" } } ];
+		 $scope.estoques = [ 
+		    {identifier:1,title:'varejo'},
+    		{identifier:2,title:'atacado'} 
+		 ];
+		 
+		 $scope.items = [ {identifier:1, name:'Camiseta Florida', price:'50'}, {identifier:1,name:'Calça Jeans', price:'30'} ];
+          
+          $scope.clientes = [ 
+            {identifier:1,corporateName:'José', cnpj: '000.000.000-00'}, 
+            {identifier:2,corporateName:'Raimundo', cnpj: '000.000.000-00'},
+            {identifier:3,corporateName:'Oliveira', cnpj: '000.000.000-00'}, 
+            {identifier:4,corporateName:'Maldonato', cnpj: '000.000.000-00'}, 
+            {identifier:5,corporateName:'Rosario', cnpj: '000.000.000-00'} 
+           ];
+		 
+		 $scope.consignacoes = [  
+           {  
+              "name":"ZXCVB",
+              "identifier":"ASDF",
+              "initialDate":"20/01/2010",
+              "finalDate":"01/01/2010",
+              "stockItemConsignmentsTO":[  
+                 {  
+                    "identifier":"QWERT",
+                    "identifierStock":"2",
+                    "identifierProduct":"QWERT",
+                    "nameProduct":"AAA",
+                    "price":"12",
+                    "quantity":"20"
+                 }
+              ],
+              "customerTO":{  
+                 "identifier":"1464721432724",
+                 "corporateName":"jose",
+                 "cnpj":"123123213",
+                 "address":"rua x",
+                 "phone":"19111111111",
+                 "bairro":"sao joao",
+                 "city":"campinas",
+                 "uf":"SP",
+                 "email":"jose@gmail.com"
+              }
+           }
+        ];
 		 */
 
 		var filtroForm = function(str, arr, field) {
@@ -165,20 +182,38 @@
 		$scope.consignacao = {
 			consignmentItemsTO : []
 		};
+		
 		$scope.valor_total = 0;
 		$scope.addItem = function() {
-			if (!$scope.consignacao.consignmentItemsTO) {
-				$scope.consignacao.consignmentItemsTO = [];
+			if (!$scope.consignacao.stockItemConsignmentsTO) {
+				$scope.consignacao.stockItemConsignmentsTO = [];
 			}
-			$scope.consignacao.consignmentItemsTO.push({
-				identifier : Date.now(),
-				productTO : $scope.itemSelecionado.originalObject,
-				quantity : $scope.consignacao.quantidadeItem
-			});
+			
+			$scope.consignacao.stockItemConsignmentsTO.push({  
+                "identifier": Date.now(),
+                "identifierStock": $scope.estoqueSelecionado.originalObject.identifier,
+                "identifierProduct":  $scope.itemSelecionado.originalObject.identifier,
+                "nameProduct": $scope.itemSelecionado.originalObject.name,
+                "price": $scope.itemSelecionado.originalObject.price,
+                "quantity": $scope.consignacao.quantidadeItem
+             });
+             
 			$scope.$broadcast('angucomplete-alt:clearInput', 'angucomplete-item');
 			$scope.itemSelecionado.description.title = '';
 			$scope.consignacao.quantidadeItem = '';
 		}
+		
+		$scope.getStock = function (items) {
+		    if(items.length) {
+		        var stockId = items[0].identifierStock;
+		        for(var i=0; i<$scope.estoques.length; i++) {
+		            if($scope.estoques[i].identifier == stockId)
+		                return $scope.estoques[i];
+		        }
+		    }
+		    
+		    return null;
+		};
 
 		$scope.dar_baixa = false;
 		$scope.showWindow = function(consignacao, form_baixa) {
@@ -186,19 +221,24 @@
 			$scope.consignacaoForm.$setUntouched();
 			$scope.consignacao = consignacao || {
 				consignmentItemsTO : [],
-				stockProductTO : {},
 				customerTO : {},
 			} && $scope.$broadcast('angucomplete-alt:clearInput');
+			
+			if($scope.consignacao.stockItemConsignmentsTO) {
+			    var estoque = $scope.getStock(consignacao.stockItemConsignmentsTO);
+				$scope.estoqueSelected = estoque;
+			}
 
 			$scope.dar_baixa = form_baixa == 1;
 			$('#consignacaoModal').modal('show');
 
-			$scope.$broadcast('angucomplete-alt:changeInput', 'angucomplete-estoque', $scope.consignacao.stockProductTO);
+			$scope.$broadcast('angucomplete-alt:changeInput', 'angucomplete-estoque', $scope.estoqueSelected);
 			$scope.$broadcast('angucomplete-alt:changeInput', 'angucomplete-cliente', $scope.consignacao.customerTO);
 		}
 
 		$scope.consignacao = {};
 		$scope.save = function(consignacao) {
+		    consignacao.customerTO = $scope.selectedClient.originalObject;
 			if ($scope.consignacaoForm.$valid) {
 				if (!consignacao.identifier) {
 					Consignacao.add(consignacao).then(function(response) {

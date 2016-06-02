@@ -112,7 +112,8 @@
 								      id="angucomplete-cliente"
 							              placeholder="Cliente"
 							              pause="300"
-							              selected-object="consignacao.customerTO"
+								      input-changed="selectClient"
+							              selected-object="selectedClient"
 							              local-data="clientes"
 							              local-search="filtroClientesForm"
 							              title-field="corporateName"
@@ -141,7 +142,7 @@
 								      id="angucomplete-estoque"
 							              placeholder="Estoque"
 							              pause="300"
-							              selected-object="consignacao.stockProductTO"
+							              selected-object="estoqueSelecionado"
 							              local-data="estoques"
 							              local-search="filtroEstoquesForm"
 							              title-field="title"
@@ -187,14 +188,14 @@
 											<th>Valor Unitário</th>
 											<th>Total</th>
 										</tr>
-										<tr ng-repeat="item in consignacao.consignmentItemsTO">
-											<td>{{item.productTO.name}}</td>
+										<tr ng-repeat="item in consignacao.stockItemConsignmentsTO">
+											<td>{{item.nameProduct}}</td>
 											<td>{{item.quantity}}</td>
-											<td>{{item.productTO.price | currency:"R$ ":2}}</td>
-											<td>{{item.productTO.price * item.quantity | currency:"R$ ":2}}</td>
+											<td>{{item.price | currency:"R$ ":2}}</td>
+											<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
 										</tr>
 										<tr>
-											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.consignmentItemsTO) | currency:"R$ ":2}}</b></td>
+											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.stockItemConsignmentsTO) | currency:"R$ ":2}}</b></td>
 										</tr>
 									</table>
 									<!-- Main content here -->
@@ -215,14 +216,14 @@
 											<th>Valor Unitário</th>
 											<th>Total</th>
 										</tr>
-										<tr ng-repeat="item in consignacao.consignmentItemsTO">
-											<td>{{item.productTO.name}}</td>
+										<tr ng-repeat="item in consignacao.stockItemConsignmentsTO">
+											<td>{{item.name}}</td>
 											<td>{{item.quantity}}</td>
-											<td>{{item.productTO.price | currency:"R$ ":2}}</td>
-											<td>{{item.productTO.price * item.quantity | currency:"R$ ":2}}</td>
+											<td>{{item.price | currency:"R$ ":2}}</td>
+											<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
 										</tr>
 										<tr>
-											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.consignmentItemsTO) | currency:"R$ ":2}}</b></td>
+											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.stockItemConsignmentsTO) | currency:"R$ ":2}}</b></td>
 										</tr>
 									</table>
 										<input ng-click="baixa(consignacao)" type="submit" class="btn btn-purple button linkBaixa" value="Dar Baixa">
