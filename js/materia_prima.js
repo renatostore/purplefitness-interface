@@ -63,17 +63,17 @@
                     MateriaPrima.add(materiaPrima).then(function(response) {
                         materiaPrima.identifier = response.data.identifier;
                         $scope.materiasPrimas.push(materiaPrima);
-                        toastr.success('Cliente criado com sucesso', 'Sucesso');
+                        toastr.success('Matéria-prima criada com sucesso', 'Sucesso');
                     },function() {
-                        toastr.error('Alguns campos estao com erros', 'Erro');
+                        toastr.error('Alguns campos estão com erros', 'Erro');
                     });
                 } else {
                     //update
                     MateriaPrima.update(materiaPrima).then(function() {
                         $scope.materiasPrimas.push(materiaPrima);
-                        toastr.success('Cliente salvo com sucesso', 'Sucesso');
+                        toastr.success('Matéria-prima salva com sucesso', 'Sucesso');
                     },function() {
-                        toastr.error('Alguns campos estao com erros', 'Erro');
+                        toastr.error('Alguns campos estão com erros', 'Erro');
                     });
                 }
                 $('#materiaPrimaModal').modal('hide');         
@@ -84,10 +84,9 @@
         $scope.remove = function(materiaPrima, index){
             MateriaPrima.remove(materiaPrima).then(function() {
                 $scope.materiasPrimas.splice(index,1);
-                $scope.materiaPrima.push();
-                toastr.success('Cliente excluido com sucesso', 'Sucesso');
+                toastr.success('Matéria-prima excluída com sucesso', 'Sucesso');
             },function() {
-                toastr.error('Erro ao excluir o cliente', 'Erro');
+                toastr.error('Erro ao excluir Matéria-prima', 'Erro');
             });
         }
     });
