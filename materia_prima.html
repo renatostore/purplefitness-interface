@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="materiasPrimas">
+<head>
+<title>purpleFitness</title>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script type="text/javascript" src="js/materia_prima.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+</head>
+<!-- CABEÇALHO -->
+<body ng-controller="MateriaPrimaController">
+	<div class="wrapper">
+	  <header class="header header-fixed navbar container-fluid">
+	      <div class="row">
+        <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="menu.html" class="navbar-brand">
+                    <i class="glyphicon glyphicon-heart-empty"></i>
+                    <span class="heading-font">PurpleFitness</span>
+                </a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="materia_prima.html">Matéria Prima</a></li>
+              <li><a href="cliente.html">Clientes</a></li>
+              <li><a href="estoque.html">Estoques</a></li>
+              <li><a href="item.html">Produtos</a></li>
+              <li><a href="consignacao.html">Consignação</a></li>
+              <li><a href="index.html">Sair</a></li>
+
+        
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+</div> <!-- /container -->
+
+	      </div>
+	  </header>
+
+	</div>
+  <!-- MENU LATERAL  -->
+  <div class="box">
+      <div class="row">
+        <div class="column col-sm-12" id="main">
+          <div class="padding">
+            <div class="full col-sm-12">
+            <!-- clienteS -->
+            <br><br><br>
+            <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                  <a class="button-search"><i class="glyphicon glyphicon-search"></i></a>
+               </div>
+                <input class="form-control" ng-model="search" type="search" ng-model="materiaPrima.name" placeholder="Pesquisar">
+            </div>
+          </div>
+             <a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Nova Matéria Prima</a>
+             <hr>
+             <table class="table">
+              <tr ng-repeat="materiaPrima in materiasPrimas | filter: search">
+                  <td class="item">
+                      <a ng-click="showWindow(materiaPrima)">{{materia_prima.name}}</a> 
+                      <i ng-click="showWindow(materiaPrima)" class="glyphicon glyphicon-pencil linkEditar"></i>
+                      <i ng-click="remove(materiaPrima, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i><br/>
+                       <small>Unidade: {{materia_prima.unity}} - Descriçã: {{materia_prima.description}}</small>
+                  </td>
+              </tr>
+          </table>
+       </div><!-- /col-9 -->
+    </div><!-- /padding -->
+</div>
+
+<!-- FORMULÁRIO DO cliente -->
+<div class="modal fade" id="materiaPrimaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close back-button" data-dismiss="modal">&times;<span class="sr-only">Close</span></button>
+        <h4 class="purple" id="myModalLabel">Matéria Prima</h4>
+      </div>
+      <div class="modal-body">
+   <form name="materiaPrimaForm" id="materiaPrimaForm">
+  <p>Por favor preencha todos os campos.</p>
+	<!-- nome -->
+	<div class="form-group" ng-class="{'has-error':materiaPrimaForm.name.$invalid && materiaPrimaForm.name.$touched}">
+	  <label for="name">Nome</label>
+	  <div class="input-group">
+	    <div class="input-group-addon">
+	      <i class="glyphicon glyphicon-book"></i>
+	    </div>
+	    <input ng-model="materiaPrima.name" ng-required="false" name="nome" id="name" class="form-control" type="text" placeholder="Nome">
+	    <span ng-if="materiaPrimaForm.name.$invalid && materiaPrimaForm.name.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+	  </div>
+	  <span ng-if="materiaPrimaForm.name.$invalid && materiaPrimaForm.name.$touched" class="help-block">O nome é requerido.</span>
+	</div>
+ <!-- unidade -->
+<div class="form-group" ng-class="{'has-error':materiaPrimaForm.unity.$invalid && materiaPrimaForm.unity.$touched}">
+  <label for="unity">Unidade</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-book"></i>
+    </div>
+    <input ng-model="materiaPrima.unity" ng-required="false" name="unidade" id="unity" class="form-control" type="text" placeholder="Unidade">
+    <span ng-if="materiaPrimaForm.unity.$invalid && materiaPrimaForm.unity.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="materiaPrimaForm.unity.$invalid && materiaPrimaForm.unity.$touched" class="help-block">A unidade é requerida.</span>
+</div>
+ <!-- descrição -->
+<div class="form-group" ng-class="{'has-error':materiaPrimaForm.description.$invalid && materiaPrimaForm.description.$touched}">
+  <label for="description">Descrição</label>
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="glyphicon glyphicon-globe"></i>
+    </div>
+    <input ng-model="materiaPrima.description" ng-required="false" name="descricao" id="description" class="form-control" type="text" placeholder="Descrição">
+    <span ng-if="materiaPrimaForm.description.$invalid && materiaPrimaForm.description.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <span ng-if="materiaPrimaForm.description.$invalid && materiaPrimaForm.description.$touched" class="help-block">A descrição é requerida.</span>
+</div>
+<!-- Main content here -->
+<div class="form-group">
+<div class="modal-footer">
+  <button type="button" class="btn btn-default back-button" data-dismiss="modal">Fechar</button>
+  <input ng-click="save(materiaPrima)" type="submit" class="btn btn-purple button button-full" value="Salvar">
+</div>
+</div>
+</div>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</body>
+</html>

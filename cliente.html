@@ -36,6 +36,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+              <li><a href="materia_prima.html">Matéria Prima</a></li>
               <li class="active"><a href="cliente.html">Clientes</a></li>
               <li><a href="estoque.html">Estoques</a></li>
               <li><a href="item.html">Produtos</a></li>
@@ -102,7 +103,7 @@
 	    <div class="input-group-addon">
 	      <i class="glyphicon glyphicon-book"></i>
 	    </div>
-	    <input ng-model="cliente.cnpj" ng-required="false" name="documento" id="documento" class="form-control" type="text" placeholder="CNPJ">
+	    <input ng-model="cliente.cnpj" ng-required="true" name="documento" id="documento" class="form-control" type="text" placeholder="CNPJ">
 	    <span ng-if="clienteForm.documento.$invalid && clienteForm.documento.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
 	  </div>
 	  <span ng-if="clienteForm.documento.$invalid && clienteForm.documento.$touched" class="help-block">O CNPJ é requerido.</span>
