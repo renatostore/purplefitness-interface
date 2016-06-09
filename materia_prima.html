@@ -74,10 +74,10 @@
              <table class="table">
               <tr ng-repeat="materiaPrima in materiasPrimas | filter: search">
                   <td class="item">
-                      <a ng-click="showWindow(materiaPrima)">{{materia_prima.name}}</a> 
+                      <a ng-click="showWindow(materiaPrima)">{{materiaPrima.name}}</a> 
                       <i ng-click="showWindow(materiaPrima)" class="glyphicon glyphicon-pencil linkEditar"></i>
                       <i ng-click="remove(materiaPrima, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i><br/>
-                       <small>Unidade: {{materia_prima.unity}} - Descriçã: {{materia_prima.description}}</small>
+                       <small>Unidade: {{materiaPrima.unity}} - Descrição: {{materiaPrima.description}}</small>
                   </td>
               </tr>
           </table>

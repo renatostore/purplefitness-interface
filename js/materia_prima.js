@@ -8,11 +8,10 @@
     .factory('MateriaPrima', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/rawmaterial/search');
-                
+                return $http.get('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/search');    
             },
             add:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/add', {
+                return $http.post('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/add', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -20,7 +19,7 @@
                 });
             },
             update:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/update', {
+                return $http.post('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/update', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -28,7 +27,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/remove', {
+                return $http.post('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/remove', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -42,7 +41,9 @@
     .controller('MateriaPrimaController',function($scope, MateriaPrima, toastr){ 
         MateriaPrima.getAll().then(function(response) {
             $scope.materiasPrimas = response.data;
-        }, function(response) {            
+            console.log($scope.materiasPrimas);
+        }, function(response) {  
+             console.log($scope.materiasPrimas);          
         });      
         $scope.currentPesquisa = '';
         $scope.setCurrentPesquisa = function(pesquisa){ 
@@ -61,7 +62,7 @@
                 if(!materiaPrima.identifier){          
                     MateriaPrima.add(materiaPrima).then(function(response) {
                         materiaPrima.identifier = response.data.identifier;
-                        $scope.materiasPrimas.push(cliente);
+                        $scope.materiasPrimas.push(materiaPrima);
                         toastr.success('Cliente criado com sucesso', 'Sucesso');
                     },function() {
                         toastr.error('Alguns campos estao com erros', 'Erro');
@@ -75,7 +76,7 @@
                         toastr.error('Alguns campos estao com erros', 'Erro');
                     });
                 }
-                $('#clienteModal').modal('hide');         
+                $('#materiaPrimaModal').modal('hide');         
             } else {
                 // Erro
             }
