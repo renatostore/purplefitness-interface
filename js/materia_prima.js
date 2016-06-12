@@ -77,7 +77,7 @@
                 }
                 $('#materiaPrimaModal').modal('hide');         
             } else {
-                // Erro
+                toastr.error('Alguns campos estao com erros', 'Erro');
             }
         }
         $scope.remove = function(materiaPrima, index){
