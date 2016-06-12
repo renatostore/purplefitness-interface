@@ -57,46 +57,46 @@
 					<div class="full col-sm-12">
 							<!-- consignacao -->
 							<br><br><br>
-							<a href="consignacao.html"  class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-file"></i> Voltar</a>
+							<a href="consignacao.html" class="btn btn-purple btn-xs pull-right back-button"><i class="glyphicon glyphicon-file"></i> Voltar</a>
 							<br/>
 							<hr>
 							<form name="relatorioForm" id="relatorioForm">
 							<!-- DATA INICIAL -->
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="data_inicial">Data Inicial</label>
+									<label for="data-inicial">Data Inicial</label>
 									<div class="input-group">
 										<div class="input-group-addon">
 											<i class="glyphicon glyphicon-calendar"></i>
 										</div>
-										<input ng-model="relatorio.data_inicial" ng-required="false" name="data_inicial" class="form-control" type="date">
+										<input ng-model="relatorio.data-inicial" ng-required="false" name="data-inicial" class="form-control" type="date">
 									</div>									
 								</div>
 							</div>	
 							<!-- DATA FINAL -->
 							<div class="col-md-4">
 								<div class="form-group">
-									<label for="data_final">Data Final</label>
+									<label for="data-final">Data Final</label>
 									<div class="input-group">
 										<div class="input-group-addon">
 											<i class="glyphicon glyphicon-calendar"></i>
 										</div>
-										<input ng-model="relatorio.data_final" ng-required="false" name="data_final" class="form-control" type="date">
+										<input ng-model="relatorio.data-final" ng-required="false" name="data-final" class="form-control" type="date">
 									</div>									
 								</div>
 							</div>		
 							<div class="col-md-4">
-							<label for="data_final"><br></label>	
+							<label for="data-final"><br></label>	
 								<div class="input-group">					
-									<input ng-click="gerar_relatorio(consignacao_relatorio)" type="submit" class="btn btn-purple button " value="Gerar Relatório">
+									<input ng-click="gerar_relatorio(consignacao_relatorio)" type="submit" class="btn btn-purple button-generate" value="Gerar Relatório">
 								</div>
 							</div>	
 							</form>
 							<div ng-if="exibir_relatorio">
-								<div ng-if="!relatorio.data_inicial || !relatorio.data_final">
+								<div ng-if="!relatorio.data-inicial || !relatorio.data-final">
 									<div class="col-md-12"><p>Favor preencher a Data Inicial e a Data Final</p></div>
 								</div>
-								<div ng-if="relatorio.data_inicial && relatorio.data_final">
+								<div ng-if="relatorio.data-inicial && relatorio.data-final">
 								<div ng-if="!consignacoes_itens">
 									<div class="col-md-12"><p>Não há dados para exibir!</p></div>
 								</div>
