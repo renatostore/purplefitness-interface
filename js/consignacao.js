@@ -1,8 +1,8 @@
 (function(){
     "use strict";
 
-    angular.module('vamosnessa',[
-        'ngAnimate', 'toastr', "angucomplete-alt"
+    angular.module('consig',[
+        'ngAnimate', 'toastr'
     ])
 
     .factory('Cliente', function($http) {
@@ -68,17 +68,19 @@
         }, function(response) {
             console.log(response);
         });*/
+
+
         $scope.consignacoes = [ 
-             {identifier:1,name:'Maria Hosé',finalDate:'14/04/2016'},
-             {identifier:2,name:'Alejandra Gutierrez',finalDate:'15/04/2016'},
-             {identifier:3,name:'Casemiro Brandão',finalDate:'20/05/2016'},
-             {identifier:4,name:'Nicholas Bauza',finalDate:'16/05/2016'},
-             {identifier:5,name:'Antonio Zago',finalDate:'30/05/2016'}
+             {identifier:1,identifierCustomer:'1',nameCustomer:'Maria Hosé',finalDate:'14/04/2016',finalizing:'1', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]},
+             {identifier:2,identifierCustomer:'2',nameCustomer:'Alejandra Gutierrez',finalDate:'15/04/2016',finalizing:'1', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'atacado', quantity:'10', price:'15'}]},
+             {identifier:3,identifierCustomer:'3',nameCustomer:'Casemiro Brandão',finalDate:'20/05/2016',finalizing:'0', finalized:'1', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]},
+             {identifier:4,identifierCustomer:'4',nameCustomer:'Nicholas Bauza',finalDate:'16/05/2016',finalizing:'0', finalized:'1', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'atacado', quantity:'10', price:'15'}]},
+             {identifier:5,identifierCustomer:'5',nameCustomer:'Antonio Zago',finalDate:'30/05/2016',finalizing:'0', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]}
          ];
 
         $scope.estoques = [ 
-             {identifier:1,titulo:'varejo'},
-             {identifier:1,titulo:'atacado'},
+             {identifier:1,title:'varejo'},
+             {identifier:1,title:'atacado'},
          ];
 
         //Clientes
@@ -89,11 +91,11 @@
             console.log(response);
         });*/
          $scope.clientes = [ 
-             {identifier:1,name:'José', documento: '000.000.000-00'},
-             {identifier:2,name:'Raimundo', documento: '000.000.000-00'},
-             {identifier:3,name:'Oliveira', documento: '000.000.000-00'},
-             {identifier:4,name:'Maldonato', documento: '000.000.000-00'},
-             {identifier:5,name:'Rosario', documento: '000.000.000-00'}
+             {identifier:1,name:'Maria Hosé', documento: '000.000.000-00'},
+             {identifier:2,name:'Alejandra Gutierrez', documento: '000.000.000-00'},
+             {identifier:3,name:'Casemiro Brandão', documento: '000.000.000-00'},
+             {identifier:4,name:'Nicholas Bauza', documento: '000.000.000-00'},
+             {identifier:5,name:'Antonio Zago', documento: '000.000.000-00'}
          ];
 
          $scope.items = [ 
@@ -105,44 +107,34 @@
         //     $scope.items = response.data;
         // }, function(response) {
         // });
-
-        var filtroForm = function (str, arr, field) {
-            var matches = [];
-
-            for (var i = arr.length - 1; i >= 0; i--) {
-                if (arr[i][field].toLowerCase().indexOf(str.toLowerCase()) != -1) {
-                      matches[matches.length] = arr[i];
-                }
-            }
-            return matches;
-        }
-
-        $scope.filtroClientesForm = function (str) {
-            return filtroForm(str, $scope.clientes, 'name');
-        }
-
-        $scope.filtroEstoquesForm = function (str) {
-            return filtroForm(str, $scope.estoques, 'titulo');
-        }
-
-        $scope.filtroItensForm = function (str) {
-            return filtroForm(str, $scope.items, 'name');
-        }
-
+//stockItemConsignmentsTO:{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}
         $scope.itensConsignados = [];
         $scope.valor_total = 0;
         $scope.addItem = function () {
             $scope.itensConsignados.push({
-                item: $scope.itemSelecionado,
-                quantidade: $scope.consignacao.quantidadeItem
+                "identifier": Date.now(),
+                "identifierStock": $scope.estoqueSelecionado.identifier,
+                "identifierProduct":  $scope.itemSelecionado.identifier,
+                "nameProduct": $scope.itemSelecionado.name,
+                "price": $scope.itemSelecionado.price,
+                "quantity": $scope.consignacao.quantidadeItem
             });
-            console.log($scope.itemSelecionado.description.price);
-            $scope.valor_total += ($scope.itemSelecionado.description.price* $scope.consignacao.quantidadeItem);
-            $scope.itemSelecionado.description.title = '';
+            console.log( $scope.itensConsignados);
+            $scope.valor_total += ($scope.itemSelecionado.price*$scope.consignacao.quantidadeItem);
+            $scope.itemSelecionado = '';
             $scope.consignacao.quantidadeItem='';
 
         }
-
+        $scope.getTotalBaixa = function(){
+            var total = 0;
+            if ($scope.consignacao.stockItemConsignmentsTO){
+                for(var i = 0; i < $scope.consignacao.stockItemConsignmentsTO.length; i++){
+                    var item = $scope.consignacao.stockItemConsignmentsTO[i];
+                    total += (item.price * item.quantity);
+                }
+            }
+            return total;
+        }
         $scope.dar_baixa=false;
         $scope.showWindow = function(consignacao, form_baixa){ 
             $scope.consignacaoForm.$setPristine(); 
@@ -181,6 +173,7 @@
         }
 
         $scope.baixa = function(consignacao){
+            console.log(consignacao);
             Consignacao.update(consignacao).then(function() {
                toastr.success('Baixa efetuada com sucesso', 'Sucesso');
             },function() {

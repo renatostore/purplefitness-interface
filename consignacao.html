@@ -1,37 +1,17 @@
 <!DOCTYPE html>
-<html ng-app="vamosnessa">
+<html ng-app="consig">
 <head>
 	<title>purpleFitness</title>
 	<meta charset="UTF-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
 	<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
-	<script type="text/javascript" src="angucomplete-alt.min.js"></script>
-	<script type="text/javascript" src="consignacao.js"></script>
-	<!-- Latest compiled and minified CSS -->
+	<script type="text/javascript" src="js/consignacao.js"></script>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!-- Latest compiled and minified JavaScript -->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
-	<style type="text/css">
-		.angucomplete-dropdown {
-		    position: absolute;
-		    z-index: 100;
-		    width: 90%;
-		}
-		.angucomplete-row, .angucomplete-searching {
-		    padding: 10px;
-		    background-color: white;
-		    border-radius: 0 0 5px 5px;
-		    border: 1px solid #ddd;
-		    cursor: pointer;
-		}
-		.angucomplete-row:hover {
-		    background-color: #dedede;
-		}
-	</style>
 </head>
 <!-- CABEÇALHO -->
 <body ng-controller="consignacaoController">
@@ -77,13 +57,24 @@
 					<div class="full col-sm-12">
 							<!-- consignacao -->
 							<br><br><br>
+							<table align="right">
+							<tr>
+								<td>
+							<a href="consignacao_relatorio.html"  class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-file"></i> Relatório de Consignação</a>
+								</td>
+								<td style="padding-left:10px">
 							<a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Nova Consignação</a>
+								</td>
+							</tr>	
+							</table>
 							<br/>
 							<hr>
 							<table class="table">
 								<tr ng-repeat="c in consignacoes"> 
                                     <td class="item"> 
-                                        <a ng-click="showWindow(c)">{{c.customerTO.corporateName}}</a>  
+                                    	<a ng-if="c.finalizing==1"><span class="glyphicon glyphicon-time" style="color:#FFA500"></span></a>
+                                    	<a ng-if="c.finalized==1"><span class="glyphicon glyphicon-time" style="color:red"></span></a>
+                                        <a ng-click="showWindow(c)">{{c.nameCustomer}}</a>  
                                         <a ng-click="showWindow(c)" class="glyphicon glyphicon-pencil linkEditar"></a> 
                                         <a ng-click="showWindow(c,1)" class="glyphicon glyphicon-save baixa consig linkBaixa"></a> 
                                         <br><small>Data: {{c.finalDate}}</small> 
@@ -93,7 +84,7 @@
 						</div><!-- /col-12 -->
 					</div><!-- /padding -->
 				</div> <!--main-->
-				<!-- FORMULÁRIO DO estoque -->
+				<!-- FORMULÁRIO DO consignação -->
 				<div class="modal fade" id="consignacaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -104,101 +95,100 @@
 							<div class="modal-body">
 								<form name="consignacaoForm" id="consignacaoForm">
 									<div ng-show="dar_baixa==false">
-									<p>Por favor preencha todos os campos.</p>
-									<!-- cliente -->
-									<div class="form-group" ng-class="{'has-error':consignacaoForm.cliente.$invalid && consignacaoForm.cliente.$touched}">
-										<label for="cliente">Cliente</label>
-
-										<angucomplete-alt
-								      id="angucomplete-cliente"
-							              placeholder="Cliente"
-							              pause="300"
-								      input-changed="selectClient"
-							              selected-object="selectedClient"
-							              local-data="clientes"
-							              local-search="filtroClientesForm"
-							              title-field="corporateName"
-							              description-field="cnpj"
-							              minlength="1"
-							              input-class="form-control form-control-small"
-							              match-class="highlight" />
-
-									</div>
-									<!-- data -->
-									<div class="form-group"  style="padding-right:0" ng-class="{'has-error':consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched}">
-										<label for="data">Data da Devolução</label>
-										<div class="input-group">
-											<div class="input-group-addon">
-												<i class="glyphicon glyphicon-calendar"></i>
+									<!--<p>Por favor preencha todos os campos.</p>-->
+									<!-- CLIENTE-->
+									<div class="col-md-8">
+										<div class="form-group">
+											<label for="cliente">Cliente</label>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="glyphicon glyphicon-user"></i>
+												</div>
+												<!--FIX_ME - na linha abaixo trocar o ng-option para pegar o id do cliente, que é cliente.identifier-->
+												<select ng-model="consignacao.nameCustomer" ng-options="cliente.name as cliente.name for cliente in clientes" name="cliente" id="cliente" class="form-control">
+												</select>
 											</div>
-											<input ng-model="consignacao.finalDate" ng-required="false" name="data" id="finalDate" class="form-control" type="text" placeholder="Data da Devolução">
-											<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
 										</div>
-										<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="help-block">A data da devolição é requerida.</span>
-									</div>
-									<!-- estoque -->
-									<div class="form-group" style="padding-left:0" ng-class="{'has-error':consignacaoForm.estoque.$invalid && consignacaoForm.estoque.$touched}">
-										<label for="estoque">Estoque</label>
-										<angucomplete-alt
-								      id="angucomplete-estoque"
-							              placeholder="Estoque"
-							              pause="300"
-							              selected-object="estoqueSelecionado"
-							              local-data="estoques"
-							              local-search="filtroEstoquesForm"
-							              title-field="title"
-							              minlength="1"
-							              input-class="form-control form-control-small"
-							              match-class="highlight" />
-									</div>
+									</div>	
+									<!-- data -->
+									<div class="col-md-4">
+										<div class="form-group"  style="padding-right:0" ng-class="{'has-error':consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched}">
+											<label for="data">Data da Devolução</label>
+											<div class="input-group  ">
+												<div class="input-group-addon">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</div>
+												<input ng-model="consignacao.finalDate" ng-required="false" name="data" id="finalDate" class="form-control" type="text">
+												<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
+											</div>
+											<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="help-block">A data da devolução é requerida.</span>
+										</div>
+									</div>	
 									
-									<!-- item -->
-									<div class="form-group column"  style="padding-left:0" ng-class="{'has-error':consignacaoForm.item.$invalid && consignacaoForm.item.$touched}">
-										<label for="item">Item</label>
-										
-										<angucomplete-alt
-								      id="angucomplete-item"
-							              placeholder="Itens"
-							              pause="300"
-							              selected-object="itemSelecionado"
-							              local-data="items"
-							              local-search="filtroItensForm"
-							              title-field="name"
-							              minlength="1"
-							              input-class="form-control form-control-small"
-							              match-class="highlight" />
+									<!-- ESTOQUE-->
+									<div class="col-md-12">
+									<label>Inserir Itens</label>
 									</div>
-									<!-- quantidade -->
-									<div class="form-group column"  ng-class="{'has-error':consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched}">
-										<label for="quantidadeItem">Quantidade</label>
-										<div class="input-group">
-											<input ng-model="consignacao.quantidadeItem" ng-required="false" name="quantidadeItem" id="quantidadeItem" class="form-control" type="text" placeholder="">
-											<span ng-if="consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="estoque">Estoque</label>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="glyphicon glyphicon-folder-open"></i>
+												</div>
+												<!--FIX_ME - na linha abaixo trocar o ng-option para pegar o id do estoque, que é estoque.identifier-->
+												<select ng-model="estoqueSelecionado" ng-options="estoque as estoque.title for estoque in estoques" name="estoque" id="estoque" class="form-control" placeholder="e">
+												</select>
+											</div>
+										</div>
+									</div>	
+										<!-- PRODUTO-->
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="item">Item</label>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="glyphicon glyphicon-folder-open"></i>
+												</div>
+												<!--Tem que mudar para item.identifier-->
+												<select ng-model="itemSelecionado" ng-options="item as item.name for item in items" name="item" id="item" class="form-control">
+												</select>
+											</div>
 										</div>
 									</div>
-									<!-- Botão ADD-->
-									<div class="form-group column col-sm-4" style="padding-right:0">
-										<button ng-click="addItem()" class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span> Adicionar</button>
+									<div class="col-md-6">	
+										<!-- quantidade -->
+										<div class="form-group column"  ng-class="{'has-error':consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched}">
+											<label for="quantidadeItem">Quantidade</label>
+											<div class="input-group">
+												<input ng-model="consignacao.quantidadeItem" ng-required="false" name="quantidadeItem" id="quantidadeItem" class="form-control" type="text" placeholder="">
+												<div class="input-group-addon">
+													<a ng-click="addItem()"><span class="glyphicon glyphicon-log-in"></span> Inserir</a>
+												</div>	
+												<span ng-if="consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
+												
+											</div>
+										</div>
 									</div>
-									
-
-									<table width="100%">
-										<tr>
-											<th>Produto</th>
-											<th>Quantidade</th>
-											<th>Valor Unitário</th>
-											<th>Total</th>
-										</tr>
-										<tr ng-repeat="item in consignacao.stockItemConsignmentsTO">
-											<td>{{item.nameProduct}}</td>
-											<td>{{item.quantity}}</td>
-											<td>{{item.price | currency:"R$ ":2}}</td>
-											<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
-										</tr>
-										<tr>
-											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.stockItemConsignmentsTO) | currency:"R$ ":2}}</b></td>
-										</tr>
-									</table>
+									<div class="col-md-12" ng-if="valor_total>0">
+										<table width="100%">
+											<tr>
+												<th>Produto</th>
+												<th>Quantidade</th>
+												<th>Valor Unitário</th>
+												<th>Total</th>
+											</tr>
+											<tr ng-repeat="item in itensConsignados">
+												<td>{{item.nameProduct}}</td>
+												<td>{{item.quantity}}</td>
+												<td>{{item.price | currency:"R$ ":2}}</td>
+												<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
+											</tr>
+											<tr>
+												<td colspan="4"><br><b>Valor Total: {{valor_total | currency:"R$ ":2}}</b></td>
+											</tr>
+										</table>
+									</div>	
 									<!-- Main content here -->
 									<div class="form-group">
 										<div class="modal-footer">
@@ -208,7 +198,7 @@
 									</div>
 									</div>
 									<div ng-show="dar_baixa">
-										<h3>{{consignacao.customerTO.corporateName}}</h3>
+										<h3>{{consignacao.nameCustomer}}</h3>
 										Lista de Produtos <br><br>
 									<table width="100%">
 										<tr>
@@ -218,13 +208,16 @@
 											<th>Total</th>
 										</tr>
 										<tr ng-repeat="item in consignacao.stockItemConsignmentsTO">
-											<td>{{item.name}}</td>
-											<td>{{item.quantity}}</td>
+											<td>{{item.nameProduct}}</td>
+											<td><input type="text" ng-model="item.quantity"></td>
 											<td>{{item.price | currency:"R$ ":2}}</td>
 											<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
 										</tr>
 										<tr>
-											<td colspan="4"><br><b>Valor Total: {{getTotal(consignacao.stockItemConsignmentsTO) | currency:"R$ ":2}}</b></td>
+											<td colspan="4" ng-if="dar_baixa"><br><b>Valor Total: {{getTotalBaixa() | currency:"R$ ":2}}</b></td>
+										</tr>
+										<tr>
+											<td><br><br></td>
 										</tr>
 									</table>
 										<input ng-click="baixa(consignacao)" type="submit" class="btn btn-purple button linkBaixa" value="Dar Baixa">
