@@ -210,11 +210,11 @@
 											<th>Valor Unitário</th>
 											<th>Total</th>
 										</tr>
-										<tr ng-repeat="item in consignacao.stockItemConsignmentsTO">
-											<td>{{item.nameProduct}}</td>
+										<tr ng-repeat="item in consignacao.consignmentItemsTO">
+											<td>{{item.productTO.name}}</td>
 											<td><input type="text" ng-model="item.quantity"></td>
-											<td>{{item.price | currency:"R$ ":2}}</td>
-											<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
+											<td>{{item.productTO.price | currency:"R$ ":2}}</td>
+											<td>{{item.productTO.price * item.quantity | currency:"R$ ":2}}</td>
 										</tr>
 										<tr>
 											<td colspan="4" ng-if="dar_baixa"><br><b>Valor Total: {{getTotalBaixa() | currency:"R$ ":2}}</b></td>
