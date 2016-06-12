@@ -34,7 +34,10 @@
             $scope.relatorioForm.$setPristine(); 
             $scope.relatorioForm.$setUntouched();
             
-            Consignacao.filter($scope.relatorio.dataInicial, $scope.relatorio.dataFinal).then(function(response) {
+            var dataInicial = new Date($scope.relatorio.dataInicial.replace(/([0-9]+)\/([0-9]+)\/([0-9]+)/, '$2/$1/$3'));
+            var dataFinal = new Date($scope.relatorio.dataInicial.replace(/([0-9]+)\/([0-9]+)\/([0-9]+)/, '$2/$1/$3'));
+
+            Consignacao.filter(dataInicial, dataFinal).then(function(response) {
                $scope.consignacoes = response.data;
                 $scope.exibir_relatorio=1;
                 //console.log($scope.consignacoes);
