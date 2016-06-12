@@ -2,13 +2,21 @@
     "use strict";
 
     angular.module('consig',[
-        'ngAnimate', 'toastr'
+        'ngAnimate', 'toastr', 'datetime'
     ])
 
     .factory('Cliente', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/customer/search');   
+                return $http.get('https://177.220.85.239:8443/purplefitness/rest/customer/search');   
+            }
+        };
+    })
+
+    .factory('Estoque', function($http) {
+        return {
+            getAll:function() {
+                return $http.get('https://177.220.85.239:8443/purplefitness/rest/stockproduct/search');
             }
         };
     })
@@ -16,41 +24,24 @@
     .factory('Consignacao', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/consignment/search');
+                return $http.get('https://177.220.85.239:8443/purplefitness/rest/consignment/search');
                 
             },
             add:function(item) {
-            	if (typeof item.initialDate !== 'object') {
-                    item.initialDate = new Date();
-                }
-                return $http.post('https://localhost:8443/purplefitness/rest/consignment/add', {
-                        name:item.name,
-                        initialDate:item.initialDate,
-                        finalDate:new Date(item.finalDate),
-                        consignmentItems:item.consignmentItems,
-                        identifier:Date.now()
-                });
+                delete item.quantidadeItem;
+                item.initialDate = new Date();
+                item.identifier = Date.now();
+                item.finalized = false;
+                item.finalizing = false;
+                item.name = '' + Date.now();
+                return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/add', item);
             },
             update:function(item) {
-            	if (typeof item.initialDate !== 'object') {
-                    item.initialDate = new Date();
-                }
-                return $http.post('https://localhost:8443/purplefitness/rest/consignment/update', {
-                        name:item.name,
-                        initialDate:item.initialDate,
-                        finalDate:new Date(item.finalDate),
-                        consignmentItems:item.consignmentItems,
-                        identifier:item.identifier
-                });
+                delete item.quantidadeItem;
+                return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/update', item);
             },
             baixa:function(item) {
-            	if (typeof item.initialDate !== 'object') {
-                    item.initialDate = new Date();
-                }
-                if (typeof item.finalDate !== 'object') {
-                    item.finalDate = new Date();
-                }
-                return $http.post('https://localhost:8443/purplefitness/rest/consignment/remove', {
+                return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/remove', {
                         name:item.name,
                         initialDate:item.initialDate,
                         finalDate:item.finalDate,
@@ -65,14 +56,14 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/product/search');
+                return $http.get('https://177.220.85.239:8443/purplefitness/rest/stockitem/search');
                 
             }
         };
     })
 
 
-	.controller('consignacaoController',function($scope, Consignacao, Cliente, Item, toastr){ 
+	.controller('consignacaoController',function($scope, Consignacao, Cliente, Estoque, Item, toastr){ 
         //consignação
         Consignacao.getAll().then(function(response) {
             $scope.consignacoes = response.data;
@@ -90,10 +81,17 @@
              {identifier:5,identifierCustomer:'5',nameCustomer:'Antonio Zago',finalDate:'30/05/2016',finalizing:'0', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]}
          ];*/
 
-        $scope.estoques = [ 
-             {identifier:1,title:'varejo'},
-             {identifier:1,title:'atacado'},
-         ];
+        // $scope.estoques = [ 
+        //      {identifier:1,title:'varejo'},
+        //      {identifier:1,title:'atacado'},
+        //  ];
+
+        Estoque.getAll().then(function(response) {
+            $scope.estoques = response.data;
+            console.log($scope.clientes);
+        }, function(response) {
+            console.log(response);
+        });
 
         //Clientes
         Cliente.getAll().then(function(response) {
@@ -119,24 +117,22 @@
              $scope.items = response.data;
          }, function(response) {
          });
-//stockItemConsignmentsTO:{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}
+
         $scope.itensConsignados = [];
         $scope.valor_total = 0;
         $scope.addItem = function () {
-            $scope.itensConsignados.push({
+            $scope.consignacao.consignmentItemsTO.push({
                 "identifier": Date.now(),
-                "identifierStock": $scope.estoqueSelecionado.identifier,
-                "identifierProduct":  $scope.itemSelecionado.identifier,
-                "nameProduct": $scope.itemSelecionado.name,
-                "price": $scope.itemSelecionado.price,
+                "productTO":  $scope.itemSelecionado,
                 "quantity": $scope.consignacao.quantidadeItem
             });
-            console.log( $scope.itensConsignados);
-            $scope.valor_total += ($scope.itemSelecionado.price*$scope.consignacao.quantidadeItem);
+
+            $scope.valor_total += ($scope.itemSelecionado.price * $scope.consignacao.quantidadeItem);
             $scope.itemSelecionado = '';
-            $scope.consignacao.quantidadeItem='';
+            $scope.consignacao.quantidadeItem = '';
 
         }
+
         $scope.getTotalBaixa = function(){
             var total = 0;
             if ($scope.consignacao.stockItemConsignmentsTO){
@@ -151,12 +147,30 @@
         $scope.showWindow = function(consignacao, form_baixa){ 
             $scope.consignacaoForm.$setPristine(); 
             $scope.consignacaoForm.$setUntouched();
-            $scope.consignacao = consignacao;         
+            $scope.consignacao = consignacao || {};
+
+            if (typeof $scope.consignacao.finalDate !== 'object') {
+                $scope.consignacao.finalDate = new Date($scope.consignacao.finalDate);
+            }
+
+            if (typeof $scope.consignacao.initialDate !== 'object') {
+                $scope.consignacao.initialDate = new Date($scope.consignacao.initialDate);
+            }
+
+            $scope.valor_total = 0;
+
+            if ($scope.consignacao.consignmentItemsTO) {
+                for (var i = $scope.consignacao.consignmentItemsTO.length - 1; i >= 0; i--) {
+                    $scope.valor_total += $scope.consignacao.consignmentItemsTO[i].quantity * $scope.consignacao.consignmentItemsTO[i].productTO.price;
+                }
+            } else {
+                $scope.consignacao.consignmentItemsTO = [];
+                $scope.consignacao.finalDate = new Date();
+                $scope.consignacao.finalDate.setMonth($scope.consignacao.finalDate.getMonth() + 1);
+            }
+            
             //só para mudar o estilo do modal, de atualizar a inserir, para dar baixa
-            if (form_baixa==1)
-                $scope.dar_baixa=true;
-            else
-                $scope.dar_baixa=false;
+            $scope.dar_baixa = form_baixa==1;
             $('#consignacaoModal').modal('show');  
         }
 
@@ -167,6 +181,7 @@
                         consignacao.identifier = response.data.identifier;
                         $scope.consignacoes.push(consignacao);
                         toastr.success('Consignação criada com sucesso', 'Sucesso');
+                        $('#consignacaoModal').modal('hide');
                     },function() {
                         toastr.error('Alguns campos estão com erros', 'Erro');
                     });
@@ -174,13 +189,13 @@
                     Consignacao.update(consignacao).then(function() {
                         $scope.consignacoes.push(consignacao);
                         toastr.success('Consignação salva com sucesso', 'Sucesso');
+                        $('#consignacaoModal').modal('hide');
                     },function() {
                         toastr.error('Alguns campos estão com erros', 'Erro');
                     });
                 }
-                $('#estoqueModal').modal('hide');         
             } else {
-                // Erro
+                toastr.error('Alguns campos estão com erros', 'Erro');
             }
         }
 

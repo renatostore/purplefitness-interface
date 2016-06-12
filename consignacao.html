@@ -7,6 +7,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
 	<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
 	<script type="text/javascript" src="js/consignacao.js"></script>
+	<script type="text/javascript" src="vendors/angular-datetime.js"></script>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -105,8 +106,9 @@
 													<i class="glyphicon glyphicon-user"></i>
 												</div>
 												<!--FIX_ME - na linha abaixo trocar o ng-option para pegar o id do cliente, que é cliente.identifier-->
-												<select ng-model="consignacao.customerTO" name="cliente" class="form-control chosen">
-													<option ng-repeat="cli in clientes" ng-value="cli">{{cli.corporateName}}</option> 
+												<select 
+													ng-model="consignacao.customerTO" name="cliente" class="form-control chosen"
+													ng-options="cli as cli.corporateName for cli in clientes track by cli.identifier">
 												</select>
 											</div>
 										</div>
@@ -119,7 +121,7 @@
 												<div class="input-group-addon">
 													<i class="glyphicon glyphicon-calendar"></i>
 												</div>
-												<input ng-model="consignacao.finalDate" ng-required="false" name="data" id="finalDate" class="form-control" type="text">
+												<input ng-model="consignacao.finalDate" datetime="dd/MM/yyyy" ng-required="false" name="data" id="finalDate" class="form-control" type="text">
 												<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
 											</div>
 											<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="help-block">A data da devolução é requerida.</span>
@@ -138,7 +140,7 @@
 													<i class="glyphicon glyphicon-folder-open"></i>
 												</div>
 												<!--FIX_ME - na linha abaixo trocar o ng-option para pegar o id do estoque, que é estoque.identifier-->
-												<select ng-model="estoqueSelecionado" ng-options="estoque as estoque.title for estoque in estoques" name="estoque" id="estoque" class="form-control" placeholder="e">
+												<select ng-model="consignacao.stockProductTO" ng-options="estoque as estoque.title for estoque in estoques track by estoque.identifier" name="estoque" id="estoque" class="form-control" placeholder="e">
 												</select>
 											</div>
 										</div>
@@ -171,7 +173,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-12" ng-if="valor_total>0">
+									<div class="col-md-12" ng-if="consignacao.consignmentItemsTO.length">
 										<table width="100%">
 											<tr>
 												<th>Produto</th>
@@ -179,11 +181,11 @@
 												<th>Valor Unitário</th>
 												<th>Total</th>
 											</tr>
-											<tr ng-repeat="item in itensConsignados">
-												<td>{{item.nameProduct}}</td>
+											<tr ng-repeat="item in consignacao.consignmentItemsTO">
+												<td>{{item.productTO.name}}</td>
 												<td>{{item.quantity}}</td>
-												<td>{{item.price | currency:"R$ ":2}}</td>
-												<td>{{item.price * item.quantity | currency:"R$ ":2}}</td>
+												<td>{{item.productTO.price | currency:"R$ ":2}}</td>
+												<td>{{item.productTO.price * item.quantity | currency:"R$ ":2}}</td>
 											</tr>
 											<tr>
 												<td colspan="4"><br><b>Valor Total: {{valor_total | currency:"R$ ":2}}</b></td>
