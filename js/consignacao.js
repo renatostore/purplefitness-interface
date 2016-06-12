@@ -20,24 +20,36 @@
                 
             },
             add:function(item) {
+            	if (typeof item.initialDate !== 'object') {
+                    item.initialDate = new Date();
+                }
                 return $http.post('https://localhost:8443/purplefitness/rest/consignment/add', {
                         name:item.name,
                         initialDate:item.initialDate,
-                        finalDate:item.finalDate,
+                        finalDate:new Date(item.finalDate),
                         consignmentItems:item.consignmentItems,
                         identifier:Date.now()
                 });
             },
             update:function(item) {
+            	if (typeof item.initialDate !== 'object') {
+                    item.initialDate = new Date();
+                }
                 return $http.post('https://localhost:8443/purplefitness/rest/consignment/update', {
                         name:item.name,
                         initialDate:item.initialDate,
-                        finalDate:item.finalDate,
+                        finalDate:new Date(item.finalDate),
                         consignmentItems:item.consignmentItems,
                         identifier:item.identifier
                 });
             },
             baixa:function(item) {
+            	if (typeof item.initialDate !== 'object') {
+                    item.initialDate = new Date();
+                }
+                if (typeof item.finalDate !== 'object') {
+                    item.finalDate = new Date();
+                }
                 return $http.post('https://localhost:8443/purplefitness/rest/consignment/remove', {
                         name:item.name,
                         initialDate:item.initialDate,
@@ -62,21 +74,21 @@
 
 	.controller('consignacaoController',function($scope, Consignacao, Cliente, Item, toastr){ 
         //consignação
-        /*Consignacao.getAll().then(function(response) {
+        Consignacao.getAll().then(function(response) {
             $scope.consignacoes = response.data;
             console.log($scope.consignacoes);
         }, function(response) {
             console.log(response);
-        });*/
+        });
 
 
-        $scope.consignacoes = [ 
+        /*$scope.consignacoes = [ 
              {identifier:1,identifierCustomer:'1',nameCustomer:'Maria Hosé',finalDate:'14/04/2016',finalizing:'1', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]},
              {identifier:2,identifierCustomer:'2',nameCustomer:'Alejandra Gutierrez',finalDate:'15/04/2016',finalizing:'1', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'atacado', quantity:'10', price:'15'}]},
              {identifier:3,identifierCustomer:'3',nameCustomer:'Casemiro Brandão',finalDate:'20/05/2016',finalizing:'0', finalized:'1', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]},
              {identifier:4,identifierCustomer:'4',nameCustomer:'Nicholas Bauza',finalDate:'16/05/2016',finalizing:'0', finalized:'1', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'atacado', quantity:'10', price:'15'}]},
              {identifier:5,identifierCustomer:'5',nameCustomer:'Antonio Zago',finalDate:'30/05/2016',finalizing:'0', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]}
-         ];
+         ];*/
 
         $scope.estoques = [ 
              {identifier:1,title:'varejo'},
@@ -84,13 +96,13 @@
          ];
 
         //Clientes
-        /*Cliente.getAll().then(function(response) {
+        Cliente.getAll().then(function(response) {
             $scope.clientes = response.data;
             console.log($scope.clientes);
         }, function(response) {
             console.log(response);
-        });*/
-         $scope.clientes = [ 
+        });
+         /**$scope.clientes = [ 
              {identifier:1,name:'Maria Hosé', documento: '000.000.000-00'},
              {identifier:2,name:'Alejandra Gutierrez', documento: '000.000.000-00'},
              {identifier:3,name:'Casemiro Brandão', documento: '000.000.000-00'},
@@ -101,12 +113,12 @@
          $scope.items = [ 
              {identifier:1,name:'Camiseta Florida', price:'50'},
              {identifier:1,name:'Calça Jeans', price:'30'},
-         ];
+         ];*/
         //Itens
-        // Item.getAll().then(function(response) {
-        //     $scope.items = response.data;
-        // }, function(response) {
-        // });
+        Item.getAll().then(function(response) {
+             $scope.items = response.data;
+         }, function(response) {
+         });
 //stockItemConsignmentsTO:{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}
         $scope.itensConsignados = [];
         $scope.valor_total = 0;

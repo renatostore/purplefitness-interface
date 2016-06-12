@@ -69,14 +69,14 @@
 							</table>
 							<br/>
 							<hr>
-							<table class="table">
+							<table class="table consig">
 								<tr ng-repeat="c in consignacoes"> 
                                     <td class="item"> 
                                     	<a ng-if="c.finalizing==1"><span class="glyphicon glyphicon-time" style="color:#FFA500"></span></a>
                                     	<a ng-if="c.finalized==1"><span class="glyphicon glyphicon-time" style="color:red"></span></a>
-                                        <a ng-click="showWindow(c)">{{c.nameCustomer}}</a>  
+                                        <a ng-click="showWindow(c)">{{c.customerTO.corporateName}}</a>  
                                         <a ng-click="showWindow(c)" class="glyphicon glyphicon-pencil linkEditar"></a> 
-                                        <a ng-click="showWindow(c,1)" class="glyphicon glyphicon-save baixa consig linkBaixa"></a> 
+                                        <a ng-click="showWindow(c,1)" class="glyphicon glyphicon-save baixa"></a> 
                                         <br><small>Data: {{c.finalDate}}</small> 
                                     </td> 
                                 </tr>
@@ -100,12 +100,13 @@
 									<div class="col-md-8">
 										<div class="form-group">
 											<label for="cliente">Cliente</label>
-											<div class="input-group">
+											<div class="input-group client-form-group">
 												<div class="input-group-addon">
 													<i class="glyphicon glyphicon-user"></i>
 												</div>
 												<!--FIX_ME - na linha abaixo trocar o ng-option para pegar o id do cliente, que é cliente.identifier-->
-												<select ng-model="consignacao.nameCustomer" ng-options="cliente.name as cliente.name for cliente in clientes" name="cliente" id="cliente" class="form-control">
+												<select ng-model="consignacao.customerTO" name="cliente" class="form-control chosen">
+													<option ng-repeat="cli in clientes" ng-value="cli">{{cli.corporateName}}</option> 
 												</select>
 											</div>
 										</div>
@@ -163,7 +164,7 @@
 											<div class="input-group">
 												<input ng-model="consignacao.quantidadeItem" ng-required="false" name="quantidadeItem" id="quantidadeItem" class="form-control" type="text" placeholder="">
 												<div class="input-group-addon">
-													<a ng-click="addItem()"><span class="glyphicon glyphicon-log-in"></span> Inserir</a>
+													<a ng-click="addItem()" id="buttonInsert"><span class="glyphicon glyphicon-log-in"></span> Inserir</a>
 												</div>	
 												<span ng-if="consignacaoForm.quantidadeItem.$invalid && consignacaoForm.quantidadeItem.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
 												
