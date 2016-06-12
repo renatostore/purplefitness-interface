@@ -7,24 +7,21 @@
 
    .factory('Consignacao', function($http) {
         return {
-            getAll:function() {
-                return $http.get('https://localhost:8443/purplefitness/rest/consignment/search');
-            },
             filter: function (dataInicio, dataFim) {
-              return $http.get('https://localhost:8443/purplefitness/rest/consignment/search?di=' + dataInicio + 'df=' + dataFim);  
+              return $http.get('https://localhost:8443/purplefitness/rest/consignment/searchfinalizedconsignemnt?di=' + dataInicio + 'df=' + dataFim);  
             }
         };
     })
 
 	.controller('consignacaoController',function($scope, Consignacao, toastr){ 
         //consignação
-        $scope.consignacoes_itens = [ 
+        /*$scope.consignacoes_itens = [ 
              {nameCustomer:'Maria Hosé',finalDate:'14/04/2016', nameProduct:'Nome', quantity_consig:'10', quantity_used:'10', price:'15'},
              {nameCustomer:'Maria Hosé',finalDate:'14/04/2016', nameProduct:'Nome', quantity_consig:'10', quantity_used:'10', price:'15'},
              {nameCustomer:'Maria Hosé',finalDate:'14/04/2016', nameProduct:'Nome', quantity_consig:'10', quantity_used:'10', price:'15'},
              {nameCustomer:'Maria Hosé',finalDate:'14/04/2016', nameProduct:'Nome', quantity_consig:'10', quantity_used:'10', price:'15'},
              {nameCustomer:'Maria Hosé',finalDate:'14/04/2016', nameProduct:'Nome', quantity_consig:'10', quantity_used:'10', price:'15'}
-         ];
+         ];*/
 
          $scope.relatorio = {};
          var now = new Date();
@@ -37,13 +34,13 @@
             $scope.relatorioForm.$setPristine(); 
             $scope.relatorioForm.$setUntouched();
             
-            // Consignacao.filter($scope.relatorio.dataInicial, $scope.relatorio.dataFinal).then(function(response) {
-            //     $scope.consignacoes = response.data;
+            Consignacao.filter($scope.relatorio.dataInicial, $scope.relatorio.dataFinal).then(function(response) {
+               $scope.consignacoes = response.data;
                 $scope.exibir_relatorio=1;
-            //     //console.log($scope.consignacoes);
-            // }, function(response) {
-            //     // console.log(response);
-            // });
+                //console.log($scope.consignacoes);
+            }, function(response) {
+               // console.log(response);
+            });
         }
     });
 })();

@@ -56,7 +56,7 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.85.239:8443/purplefitness/rest/stockitem/search');
+                return $http.get('https://177.220.85.239:8443/purplefitness/rest/product/search');
                 
             }
         };
@@ -180,22 +180,22 @@
                     Consignacao.add(consignacao).then(function(response) {
                         consignacao.identifier = response.data.identifier;
                         $scope.consignacoes.push(consignacao);
-                        toastr.success('Consignação criada com sucesso', 'Sucesso');
+                        toastr.success('Consignacao criada com sucesso', 'Sucesso');
                         $('#consignacaoModal').modal('hide');
                     },function() {
-                        toastr.error('Alguns campos estão com erros', 'Erro');
+                        toastr.error('Alguns campos estao com erros', 'Erro');
                     });
                 } else {
                     Consignacao.update(consignacao).then(function() {
                         $scope.consignacoes.push(consignacao);
-                        toastr.success('Consignação salva com sucesso', 'Sucesso');
+                        toastr.success('Consignacao salva com sucesso', 'Sucesso');
                         $('#consignacaoModal').modal('hide');
                     },function() {
-                        toastr.error('Alguns campos estão com erros', 'Erro');
+                        toastr.error('Alguns campos estao com erros', 'Erro');
                     });
                 }
             } else {
-                toastr.error('Alguns campos estão com erros', 'Erro');
+                toastr.error('Alguns campos estao com erros', 'Erro');
             }
         }
 
@@ -204,7 +204,7 @@
             Consignacao.update(consignacao).then(function() {
                toastr.success('Baixa efetuada com sucesso', 'Sucesso');
             },function() {
-                toastr.error('Baixa está com erro', 'Erro');
+                toastr.error('Baixa esta com erro', 'Erro');
             });
         }
     });

@@ -61,7 +61,7 @@
 							<table align="right">
 							<tr>
 								<td>
-							<a href="consignacao_relatorio.html"  class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-file"></i> Relatório de Consignação</a>
+							<a href="consignacao_relatorio.html"  class="btn btn-purple btn-xs pull-right"><i class="glyphicon glyphicon-file"></i> Relatório de Consignação</a>
 								</td>
 								<td style="padding-left:10px">
 							<a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Nova Consignação</a>
@@ -73,8 +73,8 @@
 							<table class="table consig">
 								<tr ng-repeat="c in consignacoes"> 
                                     <td class="item"> 
-                                    	<a ng-if="c.finalizing==1"><span class="glyphicon glyphicon-time" style="color:#FFA500"></span></a>
-                                    	<a ng-if="c.finalized==1"><span class="glyphicon glyphicon-time" style="color:red"></span></a>
+                                    	<a ng-if="c.finalizing==1" class="finalizing"><span class="glyphicon glyphicon-time" style="color:#FFA500"></span></a>
+                                    	<a ng-if="c.finalized==1" class="finalized"><span class="glyphicon glyphicon-time" style="color:red"></span></a>
                                         <a ng-click="showWindow(c)">{{c.customerTO.corporateName}}</a>  
                                         <a ng-click="showWindow(c)" class="glyphicon glyphicon-pencil linkEditar"></a> 
                                         <a ng-click="showWindow(c,1)" class="glyphicon glyphicon-save baixa"></a> 
@@ -121,7 +121,7 @@
 												<div class="input-group-addon">
 													<i class="glyphicon glyphicon-calendar"></i>
 												</div>
-												<input ng-model="consignacao.finalDate" datetime="dd/MM/yyyy" ng-required="false" name="data" id="finalDate" class="form-control" type="text">
+												<input ng-model="consignacao.finalDate" datetime="dd/MM/yyyy" ng-required="true" name="data" id="finalDate" class="form-control" type="text">
 												<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="glyphicon glyphicon-user form-control-feedback"></span>
 											</div>
 											<span ng-if="consignacaoForm.finalDate.$invalid && consignacaoForm.finalDate.$touched" class="help-block">A data da devolução é requerida.</span>
