@@ -8,10 +8,10 @@
     .factory('MateriaPrima', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/search');    
+                return $http.get('https://localhost:8443/purplefitness/rest/rawmaterial/search');    
             },
             add:function(item) {
-                return $http.post('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/add', {
+                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/add', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -19,7 +19,7 @@
                 });
             },
             update:function(item) {
-                return $http.post('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/update', {
+                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/update', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -27,7 +27,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://177.220.84.212:8443/purplefitness/rest/rawmaterial/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/remove', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -63,17 +63,16 @@
                     MateriaPrima.add(materiaPrima).then(function(response) {
                         materiaPrima.identifier = response.data.identifier;
                         $scope.materiasPrimas.push(materiaPrima);
-                        toastr.success('Matéria-prima criada com sucesso', 'Sucesso');
+                        toastr.success('Materia-prima criada com sucesso', 'Sucesso');
                     },function() {
-                        toastr.error('Alguns campos estão com erros', 'Erro');
+                        toastr.error('Alguns campos estao com erros', 'Erro');
                     });
                 } else {
                     //update
                     MateriaPrima.update(materiaPrima).then(function() {
-                        $scope.materiasPrimas.push(materiaPrima);
-                        toastr.success('Matéria-prima salva com sucesso', 'Sucesso');
+                        toastr.success('Materia-prima salva com sucesso', 'Sucesso');
                     },function() {
-                        toastr.error('Alguns campos estão com erros', 'Erro');
+                        toastr.error('Alguns campos estao com erros', 'Erro');
                     });
                 }
                 $('#materiaPrimaModal').modal('hide');         
@@ -84,9 +83,9 @@
         $scope.remove = function(materiaPrima, index){
             MateriaPrima.remove(materiaPrima).then(function() {
                 $scope.materiasPrimas.splice(index,1);
-                toastr.success('Matéria-prima excluída com sucesso', 'Sucesso');
+                toastr.success('Materia-prima excluida com sucesso', 'Sucesso');
             },function() {
-                toastr.error('Erro ao excluir Matéria-prima', 'Erro');
+                toastr.error('Erro ao excluir Materia-prima', 'Erro');
             });
         }
     });
