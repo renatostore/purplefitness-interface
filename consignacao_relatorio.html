@@ -90,10 +90,12 @@
 								<label for="data-final" class="hidden-sm hidden-xs"><br></label>
 								<div class="input-group">					
 									<input ng-click="gerar_relatorio(consignacao_relatorio)" type="submit" class="btn btn-purple button-generate" value="Gerar Relatório">
+									<a ng-if="exibir_relatorio" ng-click="success()" href="data:text/csv;charset=utf-8,{{data}}" download="relatorio.csv" class="btn btn-default">Download</a>
 								</div>
-							</div>	
+							</div>
 						</div>
 					</form>
+
 					<div ng-if="exibir_relatorio" style="margin-top: 25px;">
 						<div ng-if="!relatorio.dataInicial || !relatorio.dataFinal">
 							<div class="col-md-12"><p>Favor preencher a Data Inicial e a Data Final</p></div>
@@ -114,13 +116,13 @@
 										<th>Total</th>
 									</tr>
 									<tr ng-repeat="item in consignacoes_itens">
-										<td class="hidden-sm hidden-xs">{{item.finalDate}}</td>
-										<td>{{item.nameCustomer}}</td>
+										<td class="hidden-sm hidden-xs">{{item.date}}</td>
+										<td>{{item.customerName}}</td>
 										<td>{{item.nameProduct}}</td>
-										<td class="hidden-xs">{{item.quantity_consig}}</td>
-										<td>{{item.quantity_used}}</td>
-										<td>{{item.price | currency:"R$ ":2}}</td>
-										<td>{{item.price * item.quantity_used | currency:"R$ ":2}}</td>
+										<td class="hidden-xs">{{item.ordered}}</td>
+										<td>{{item.sold}}</td>
+										<td>{{item.unityPrice | currency:"R$ ":2}}</td>
+										<td>{{item.unityPrice * item.sold | currency:"R$ ":2}}</td>
 									</tr>
 								</table>
 							</div>
