@@ -17,7 +17,7 @@
    .factory('Consignacao', function($http) {
         return {
             filter: function (dataInicio, dataFim) {
-              return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/searchfinalizedconsignemnt', {
+              return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/searchfinalizedconsignemnt', {
                 initialDate: dataInicio,
                 finalDate: dataFim
               });  
@@ -27,13 +27,14 @@
 
 	.controller('consignacaoController',function($scope, Consignacao, toastr){ 
         //consignação
+        /*
         $scope.consignacoes_itens = [ 
              {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
              {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
              {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
              {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
              {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'}
-         ];
+         ];*/
 
          $scope.relatorio = {};
          var now = new Date();
@@ -68,8 +69,8 @@
             var dataInicial = new Date($scope.relatorio.dataInicial.replace(/([0-9]+)\/([0-9]+)\/([0-9]+)/, '$2/$1/$3'));
             var dataFinal = new Date($scope.relatorio.dataFinal.replace(/([0-9]+)\/([0-9]+)\/([0-9]+)/, '$2/$1/$3'));
 
-            // Consignacao.filter(dataInicial, dataFinal).then(function(response) {
-                //$scope.consignacoes_itens = response.data;
+             Consignacao.filter(dataInicial, dataFinal).then(function(response) {
+                $scope.consignacoes_itens = response.data;
 
                 for (var i = $scope.consignacoes_itens.length - 1; i >= 0; i--) {
                     var date = new Date($scope.consignacoes_itens[i].date);
@@ -80,9 +81,9 @@
 
                 $scope.exibir_relatorio = 1;
                 //console.log($scope.consignacoes);
-            // }, function(response) {
+             }, function(response) {
                // console.log(response);
-            // });
+             });
         }
     });
 })();

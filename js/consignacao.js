@@ -8,7 +8,7 @@
     .factory('Cliente', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.85.239:8443/purplefitness/rest/customer/search');   
+                return $http.get('https://177.220.84.127:8443/purplefitness/rest/customer/search');   
             }
         };
     })
@@ -16,7 +16,7 @@
     .factory('Estoque', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.85.239:8443/purplefitness/rest/stockproduct/search');
+                return $http.get('https://177.220.84.127:8443/purplefitness/rest/stockproduct/search');
             }
         };
     })
@@ -24,7 +24,7 @@
     .factory('Consignacao', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.85.239:8443/purplefitness/rest/consignment/search');
+                return $http.get('https://177.220.84.127:8443/purplefitness/rest/consignment/search');
                 
             },
             add:function(item) {
@@ -34,14 +34,14 @@
                 item.finalized = false;
                 item.finalizing = false;
                 item.name = '' + Date.now();
-                return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/add', item);
+                return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/add', item);
             },
             update:function(item) {
                 delete item.quantidadeItem;
-                return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/update', item);
+                return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/update', item);
             },
             baixa:function(item) {
-                return $http.post('https://177.220.85.239:8443/purplefitness/rest/consignment/remove', {
+                return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/remove', {
                         name:item.name,
                         initialDate:item.initialDate,
                         finalDate:item.finalDate,
@@ -56,7 +56,7 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.85.239:8443/purplefitness/rest/product/search');
+                return $http.get('https://177.220.84.127:8443/purplefitness/rest/product/search');
                 
             }
         };

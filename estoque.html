@@ -151,7 +151,7 @@
 							<hr>
 							<table class="table">
 								<tr ng-repeat="estoque_es in estoques_es | filter:search" ng-show="estoque_es.show">
-									<td class="item"><a ng-click="showWindowES(estoque_es)" class="choser">{{estoque_es.identifier}}</a> <a ng-click="showWindowES(estoque_es)" class="button-openincrement"><i class="glyphicon glyphicon-sort"></i></a><br /> <small>Quantidade: {{estoque_es.quantity}}</small></td>
+									<td class="item"><a ng-click="showWindowES(estoque_es)" class="choser">{{estoque_es.nameProduct}}</a> <a ng-click="showWindowES(estoque_es)" class="button-openincrement"><i class="glyphicon glyphicon-sort"></i></a><br /> <small>Quantidade: {{estoque_es.quantity}}</small></td>
 								</tr>
 							</table>
 						</div>
