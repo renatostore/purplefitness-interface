@@ -17,7 +17,7 @@
    .factory('Consignacao', function($http) {
         return {
             filter: function (dataInicio, dataFim) {
-              return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/searchfinalizedconsignemnt', {
+              return $http.post('https://localhost:8443/purplefitness/rest/consignment/searchfinalizedconsignemnt', {
                 initialDate: dataInicio,
                 finalDate: dataFim
               });  
@@ -27,14 +27,6 @@
 
 	.controller('consignacaoController',function($scope, Consignacao, toastr){ 
         //consignação
-        /*
-        $scope.consignacoes_itens = [ 
-             {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
-             {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
-             {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
-             {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'},
-             {customerName:'Maria Hosé',date:'2016-06-10T12:00:00.000Z', nameProduct:'Nome', ordered:'10', sold:'10', unityPrice:'15'}
-         ];*/
 
          $scope.relatorio = {};
          var now = new Date();
@@ -59,7 +51,7 @@
         }
 
         $scope.success = function () {
-            toastr.success('Relatório exportado com sucesso', 'Sucesso');
+            toastr.success('Relatorio exportado com sucesso', 'Sucesso');
         };
 
        $scope.gerar_relatorio = function(relatorio){ 

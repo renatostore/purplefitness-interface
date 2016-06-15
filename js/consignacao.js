@@ -8,7 +8,7 @@
     .factory('Cliente', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/customer/search');   
+                return $http.get('https://localhost:8443/purplefitness/rest/customer/search');   
             }
         };
     })
@@ -16,7 +16,7 @@
     .factory('Estoque', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/stockproduct/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/stockproduct/search');
             }
         };
     })
@@ -24,7 +24,7 @@
     .factory('Consignacao', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/consignment/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/consignment/search');
                 
             },
             add:function(item) {
@@ -34,14 +34,14 @@
                 item.finalized = false;
                 item.finalizing = false;
                 item.name = '' + Date.now();
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/add', item);
+                return $http.post('https://localhost:8443/purplefitness/rest/consignment/add', item);
             },
             update:function(item) {
                 delete item.quantidadeItem;
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/update', item);
+                return $http.post('https://localhost:8443/purplefitness/rest/consignment/update', item);
             },
             baixa:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/consignment/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/consignment/remove', {
                         name:item.name,
                         initialDate:item.initialDate,
                         finalDate:item.finalDate,
@@ -56,7 +56,7 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/product/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/product/search');
                 
             }
         };
@@ -72,20 +72,6 @@
             console.log(response);
         });
 
-
-        /*$scope.consignacoes = [ 
-             {identifier:1,identifierCustomer:'1',nameCustomer:'Maria Hosé',finalDate:'14/04/2016',finalizing:'1', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]},
-             {identifier:2,identifierCustomer:'2',nameCustomer:'Alejandra Gutierrez',finalDate:'15/04/2016',finalizing:'1', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'atacado', quantity:'10', price:'15'}]},
-             {identifier:3,identifierCustomer:'3',nameCustomer:'Casemiro Brandão',finalDate:'20/05/2016',finalizing:'0', finalized:'1', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]},
-             {identifier:4,identifierCustomer:'4',nameCustomer:'Nicholas Bauza',finalDate:'16/05/2016',finalizing:'0', finalized:'1', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'atacado', quantity:'10', price:'15'}]},
-             {identifier:5,identifierCustomer:'5',nameCustomer:'Antonio Zago',finalDate:'30/05/2016',finalizing:'0', finalized:'0', stockItemConsignmentsTO:[{identifier:'1', identifierStock:'1', identifierProduct:'1',nameProduct:'Nome', nameStock:'varejo', quantity:'10', price:'15'}]}
-         ];*/
-
-        // $scope.estoques = [ 
-        //      {identifier:1,title:'varejo'},
-        //      {identifier:1,title:'atacado'},
-        //  ];
-
         Estoque.getAll().then(function(response) {
             $scope.estoques = response.data;
             console.log($scope.clientes);
@@ -100,18 +86,7 @@
         }, function(response) {
             console.log(response);
         });
-         /**$scope.clientes = [ 
-             {identifier:1,name:'Maria Hosé', documento: '000.000.000-00'},
-             {identifier:2,name:'Alejandra Gutierrez', documento: '000.000.000-00'},
-             {identifier:3,name:'Casemiro Brandão', documento: '000.000.000-00'},
-             {identifier:4,name:'Nicholas Bauza', documento: '000.000.000-00'},
-             {identifier:5,name:'Antonio Zago', documento: '000.000.000-00'}
-         ];
-
-         $scope.items = [ 
-             {identifier:1,name:'Camiseta Florida', price:'50'},
-             {identifier:1,name:'Calça Jeans', price:'30'},
-         ];*/
+        
         //Itens
         Item.getAll().then(function(response) {
              $scope.items = response.data;

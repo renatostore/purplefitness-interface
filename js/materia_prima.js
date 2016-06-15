@@ -8,10 +8,10 @@
     .factory('MateriaPrima', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/rawmaterial/search');    
+                return $http.get('https://localhost:8443/purplefitness/rest/rawmaterial/search');    
             },
             add:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/rawmaterial/add', {
+                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/add', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -19,7 +19,7 @@
                 });
             },
             update:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/rawmaterial/update', {
+                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/update', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,
@@ -27,7 +27,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/rawmaterial/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/rawmaterial/remove', {
                         name:item.name,
                         description:item.description,
                         unity:item.unity,

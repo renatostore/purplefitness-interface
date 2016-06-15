@@ -8,23 +8,23 @@
     .factory('Estoque', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/stockproduct/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/stockproduct/search');
                 
             },
             add:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/stockproduct/add', {
+                return $http.post('https://localhost:8443/purplefitness/rest/stockproduct/add', {
                         title:item.title,
                         identifier:Date.now()
                 });
             },
             update:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/stockproduct/update', {
+                return $http.post('https://localhost:8443/purplefitness/rest/stockproduct/update', {
                         title:item.title,
                         identifier:item.identifier
                 });
             },
             remove:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/stockproduct/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/stockproduct/remove', {
                         title:item.title,
                         identifier:item.identifier
                 });
@@ -35,11 +35,11 @@
     .factory('Estoque_ES', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/stockitem/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/stockitem/search');
                 
             },
             add:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/stockitem/add', {
+                return $http.post('https://localhost:8443/purplefitness/rest/stockitem/add', {
                         identifierStock:item.identifierStock,
                         identifierProduct:item.identifierProduct,
                         quantity:item.quantity,
@@ -47,7 +47,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/stockitem/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/stockitem/remove', {
                         identifierStock:item.identifierStock,
                         identifierProduct:item.identifierProduct,
                         quantity:item.quantity,
@@ -60,7 +60,7 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/product/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/product/search');
                 
             }
         };

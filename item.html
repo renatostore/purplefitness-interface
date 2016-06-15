@@ -18,184 +18,126 @@
 <!-- CABEÇALHO -->
 <body ng-controller="MainController">
 	<div class="wrapper">
-	  <header class="header header-fixed navbar container-fluid">
-	      <div class="row">
-        <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a href="menu.html" class="navbar-brand">
-                    <i class="glyphicon glyphicon-heart-empty"></i>
-                    <span class="heading-font">PurpleFitness</span>
-                </a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="materia_prima.html">Matéria Prima</a></li>
-              <li><a href="cliente.html">Clientes</a></li>
-              <li><a href="estoque.html">Estoques</a></li>
-              <li class="active"><a href="item.html">Itens</a></li>
-              <li><a href="consignacao.html">Consignação</a></li>
-              <li><a href="index.html">Sair</a></li>
-
-        
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
-</div> <!-- /container -->
-
-	      </div>
-	  </header>
-
+		<header class="header header-fixed navbar container-fluid">
+			<div class="row">
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+								<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+							</button>
+							<a href="menu.html" class="navbar-brand"> <i class="glyphicon glyphicon-heart-empty"></i> <span class="heading-font">PurpleFitness</span>
+							</a>
+						</div>
+						<div id="navbar" class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+								<li><a href="materia_prima.html">Matéria Prima</a></li>
+								<li><a href="cliente.html">Clientes</a></li>
+								<li><a href="estoque.html">Estoques</a></li>
+								<li class="active"><a href="item.html">Produtos</a></li>
+								<li><a href="consignacao.html">Consignação</a></li>
+								<li><a href="index.html">Sair</a></li>
+						</div>
+						<!--/.nav-collapse -->
+					</div>
+					<!--/.container-fluid -->
+				</nav>
+			</div>
+			<!-- /container -->
 	</div>
-  <!-- MENU LATERAL  -->
-  <div class="box">
-      <div class="row">
-        <div class="column col-sm-12" id="main">
-          <div class="padding">
-            <div class="full col-sm-12">
-            <!-- PRODUTOS -->
-            <br><br><br>
-            <!-- <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-addon">
-                  <i class="glyphicon glyphicon-tag"></i>
-               </div>
-                 <select ng-change="setCurrentCategory(item.category)" class="form-control" ng-model="item.category" ng-options="value for value in categories">
-                 <option value="" style="color:#c3c3c3">Categoria</option>
-                </select>
-            </div> -->
-          </div>
-
-            <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-addon">
-                  <a class="button-search"><i class="glyphicon glyphicon-search"></i></a>
-               </div>
-                <input class="form-control" ng-model="search" type="search" ng-model="item.nome" placeholder="Pesquisar">
-            </div>
-          </div>
-
-          
-  
-             <a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add"><i class="glyphicon glyphicon-plus-sign"></i> Novo Item</a>
-             <hr>
-             <table class="table">
-              <tr ng-repeat="item in items | filter:search">
-                  <td class="item">
-                      <a ng-click="showWindow(item)" class="linkEditar">{{item.name}}</a> 
-                      <i ng-click="showWindow(item)" class="glyphicon glyphicon-pencil"></i>
-                      <i ng-click="remove(item, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i><br/>
-                       <small>Unidade: {{item.unity}} - Preço: R$ {{item.price}}</small>
-                  </td>
-              </tr>
-          </table>
-       </div><!-- /col-9 -->
-    </div><!-- /padding -->
-</div>
-
-<!-- FORMULÁRIO DO PRODUTO -->
-<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button ngclick="" type="button" class="close linkCancelar" data-dismiss="modal"><span class="sr-only back-button">Close</span></button>
-        <h4 class="modal-nome purple" id="myModalLabel">Item</h4>
-      </div>
-      <div class="modal-body">
-   <form name="itemForm" id="itemForm">
-  <p>Por favor preencha todos os campos.</p>
-  <!-- CATEGORIA -->
- <!-- <div class="form-group">
-  <label for="category">Categoria</label>
-  <div class="input-group">
-    <div class="input-group-addon">
-      <i class="glyphicon glyphicon-folder-open"></i>
-    </div>
-    <select id="category" class="form-control">
-    </select>
-  </div>
-</div> -->
-<!-- CÓDIGO DE BARRAS -->
-<!-- <div class="form-group" ng-class="{'has-error':itemForm.cod_barras.$invalid && itemForm.cod_barras.$touched}">
-  <label for="cod_barras">Código de Barras</label>
-  <div class="input-group">
-    <div class="input-group-addon">
-      <i class="glyphicon glyphicon-barcode"></i>
-    </div>
-    <input ng-required="false" name="cod_barras" id="cod_barras" class="form-control" type="text" placeholder="Código de Barras">
-    <span ng-if="itemForm.cod_barras.$invalid && itemForm.cod_barras.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  </div>
-  <span ng-if="itemForm.cod_barras.$invalid && itemForm.cod_barras.$touched" class="help-block">O código de barras é requerido.</span>
-</div> -->
-<!-- NOME -->
-<div class="form-group" ng-class="{'has-error':itemForm.nome.$invalid && itemForm.nome.$touched}">
-  <label for="nome">Nome</label>
-  <div class="input-group">
-    <div class="input-group-addon">
-      <i class="glyphicon glyphicon-font"></i>
-    </div>
-    <input ng-model="item.name" ng-required="false" name="nome" id="nome" class="form-control" type="text" placeholder="Nome do Item">
-    <span ng-if="itemForm.nome.$invalid && itemForm.nome.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  </div>
-  <span ng-if="itemForm.nome.$invalid && itemForm.nome.$touched" class="help-block">O nome é requerido.</span>
-</div>
-<!-- UNIDADE -->
-<div class="form-group" ng-class="{'has-error':itemForm.unidade.$invalid && itemForm.unidade.$touched}">
-  <label for="unidade">Unidade</label>
-  <div class="input-group">
-    <div class="input-group-addon">
-      <i class="glyphicon glyphicon-list"></i>
-    </div>
-    <input ng-model="item.unity" ng-required="false" name="unidade" id="unidade" class="form-control" type="text" placeholder="Unidade">
-    <span ng-if="itemForm.unidade.$invalid && itemForm.unidade.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  </div>
-  <span ng-if="itemForm.unidade.$invalid && itemForm.unidade.$touched" class="help-block">Uma Unidade é requerida.</span>
-</div>
-<!-- TECIDO -->
-<!--
-<div class="form-group" ng-class="{'has-error':itemForm.tecido.$invalid && itemForm.tecido.$touched}">
-  <label for="tecido">Tecido</label>
-  <div class="input-group">
-    <div class="input-group-addon">
-      <i class="glyphicon glyphicon-list"></i>
-    </div>
-    <input ng-required="false" name="tecido" id="tecido" class="form-control" type="text" placeholder="tecido">
-    <span ng-if="itemForm.tecido.$invalid && itemForm.tecido.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  </div>
-  <span ng-if="itemForm.tecido.$invalid && itemForm.tecido.$touched" class="help-block">Um Tecido é requerido.</span>
-</div>
--->
-<!-- preco -->
-<div class="form-group" ng-class="{'has-error':itemForm.preco.$invalid && itemForm.preco.$touched}">
-  <label for="preco">preco</label>
-  <div class="input-group">
-    <div class="input-group-addon">
-      <i class="glyphicon glyphicon-usd"></i>
-    </div>
-    <input ng-model="item.price" ng-required="false" minlength="1" maxlength="200" name="preco" id="preco" class="form-control" type="text" placeholder="preco">
-    <span ng-if="itemForm.preco.$invalid && itemForm.preco.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  </div>
-  <span ng-if="itemForm.preco.$invalid && itemForm.preco.$touched" class="help-block">Um preco é requerido.</span>
-</div>
-<!-- Main content here -->
-<div class="form-group">
-<div class="modal-footer">
-  <button type="button" class="btn btn-default back-button linkCancelar" data-dismiss="modal">Fechar</button>
-  <input ng-click="save(item)" type="submit" class="btn btn-purple button button-full" value="Salvar">
-</div>
-</div>
-</div>
-</form>
-      </div>
-      
-    </div>
-  </div>
-</div>
+	</header>
+	</div>
+	<!-- MENU LATERAL  -->
+	<div class="box">
+		<div class="row">
+			<div class="column col-sm-12" id="main">
+				<div class="padding">
+					<div class="full col-sm-12">
+						<!-- PRODUTOS -->
+						<br> <br> <br>
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">
+								<a class="button-search"><i class="glyphicon glyphicon-search"></i></a>
+							</div>
+							<input class="form-control" ng-model="search" type="search" ng-model="item.nome" placeholder="Pesquisar">
+						</div>
+					</div>
+					<p style="float:left;padding: 10px;color: #912cee;">Selecione o produto desejado.</p>
+					<a href="#" ng-click="showWindow()" class="btn btn-purple btn-xs pull-right button-add" style="float:right;"><i class="glyphicon glyphicon-plus-sign"></i> Novo Produto</a> <br />
+					<hr>
+					<table class="table">
+						<tr ng-repeat="item in items | filter:search">
+							<td class="item"><a ng-click="showWindow(item)" class="linkEditar">{{item.name}}</a>
+								<div class="groupButton">
+									<i ng-click="showWindow(item)" class="glyphicon glyphicon-pencil"></i> <i ng-click="remove(item, $index)" class="glyphicon glyphicon-trash button-remove linkDeletar"></i>
+								</div> <br /> <small>Unidade: {{item.unity}} - Preço: R$ {{item.price}}</small></td>
+						</tr>
+					</table>
+				</div>
+				<!-- /col-9 -->
+			</div>
+			<!-- /padding -->
+		</div>
+		<!-- FORMULÁRIO DO PRODUTO -->
+		<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button ngclick="" type="button" class="close linkCancelar" data-dismiss="modal">
+							<span class="sr-only back-button">Close</span>
+						</button>
+						<h4 class="modal-nome purple" id="myModalLabel">Produto</h4>
+					</div>
+					<div class="modal-body">
+						<form name="itemForm" id="itemForm">
+							<p>Informe os campos abaixo.</p>
+							<!-- NOME -->
+							<div class="form-group" ng-class="{'has-error':itemForm.nome.$invalid && itemForm.nome.$touched}">
+								<label for="nome">Nome</label>
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="glyphicon glyphicon-font"></i>
+									</div>
+									<input ng-model="item.name" ng-required="false" name="nome" id="nome" class="form-control" type="text" placeholder="Nome do produto"> <span ng-if="itemForm.nome.$invalid && itemForm.nome.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+								</div>
+								<span ng-if="itemForm.nome.$invalid && itemForm.nome.$touched" class="help-block">O nome é requerido.</span>
+							</div>
+							<!-- UNIDADE -->
+							<div class="form-group" ng-class="{'has-error':itemForm.unidade.$invalid && itemForm.unidade.$touched}">
+								<label for="unidade">Unidade de medida</label>
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="glyphicon glyphicon-list"></i>
+									</div>
+									<input ng-model="item.unity" ng-required="false" name="unidade" id="unidade" class="form-control" type="text" placeholder="Unidade de medida"> <span ng-if="itemForm.unidade.$invalid && itemForm.unidade.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+								</div>
+								<span ng-if="itemForm.unidade.$invalid && itemForm.unidade.$touched" class="help-block">Uma Unidade é requerida.</span>
+							</div>
+							<!-- Preco -->
+							<div class="form-group" ng-class="{'has-error':itemForm.preco.$invalid && itemForm.preco.$touched}">
+								<label for="preco">Valor</label>
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="glyphicon glyphicon-usd"></i>
+									</div>
+									<input ng-model="item.price" ng-required="false" minlength="1" maxlength="200" name="preco" id="preco" class="form-control" type="text" placeholder="Preço"> <span ng-if="itemForm.preco.$invalid && itemForm.preco.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+								</div>
+								<span ng-if="itemForm.preco.$invalid && itemForm.preco.$touched" class="help-block">O Preço é requerido.</span>
+							</div>
+							<!-- Main content here -->
+							<div class="form-group">
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default back-button linkCancelar" data-dismiss="modal">Cancelar</button>
+									<input ng-click="save(item)" type="submit" class="btn btn-purple button button-full" value="Salvar">
+								</div>
+							</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

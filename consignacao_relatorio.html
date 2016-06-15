@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="consig">
 <head>
-	<title>purpleFitness</title>
-	<meta charset="UTF-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
-	<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
-	<script type="text/javascript" src="js/consignacao_relatorio.js"></script>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+<title>purpleFitness</title>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+<script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script type="text/javascript" src="js/consignacao_relatorio.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
 </head>
 <!-- CABEÇALHO -->
 <body ng-controller="consignacaoController">
@@ -22,14 +22,9 @@
 					<div class="container-fluid">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
+								<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 							</button>
-							<a href="menu.html" class="navbar-brand">
-								<i class="glyphicon glyphicon-heart-empty"></i>
-								<span class="heading-font">PurpleFitness</span>
+							<a href="menu.html" class="navbar-brand"> <i class="glyphicon glyphicon-heart-empty"></i> <span class="heading-font">PurpleFitness</span>
 							</a>
 						</div>
 						<div id="navbar" class="navbar-collapse collapse">
@@ -40,99 +35,107 @@
 								<li><a href="item.html">Produtos</a></li>
 								<li class="active"><a href="consignacao.html">Consignação</a></li>
 								<li><a href="index.html">Sair</a></li>
-							</ul><!--/.nav-collapse -->
-						</div><!--/.container-fluid -->
+							</ul>
+							<!--/.nav-collapse -->
+						</div>
+						<!--/.container-fluid -->
 					</div>
 				</nav>
-			</div> <!-- /container -->
-		</div>
+			</div>
+			<!-- /container -->
+	</div>
 	</header>
-</div>
-<!-- MENU LATERAL  -->
-
-<div class="box">
-	<div class="row">
-		<div class="column col-sm-12" id="main">
-			<div class="padding">
-				<div class="full col-sm-12">
-					<!-- consignacao -->
-					<br><br><br>
-					<a href="consignacao.html" class="btn btn-purple btn-xs pull-right back-button"><i class="glyphicon glyphicon-file"></i> Voltar</a>
-					<br/>
-					<hr>
-					<form name="relatorioForm" id="relatorioForm">
-						<!-- DATA INICIAL -->
-						<div class="row-fluid"> 
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="data-inicial">Data Inicial</label>
-									<div class="input-group">
-										<div class="input-group-addon">
-											<i class="glyphicon glyphicon-calendar"></i>
+	</div>
+	<!-- MENU LATERAL  -->
+	<div class="box">
+		<div class="row">
+			<div class="column col-sm-12" id="main">
+				<div class="padding">
+					<div class="full col-sm-12">
+						<!-- consignacao -->
+						<br> <br> <br>
+						<p style="float: left; padding: 10px; color: #912cee;">Informe o período desejado</p>
+						<a href="consignacao.html" class="btn btn-purple btn-xs pull-right back-button" style="float:right;"><i class="glyphicon glyphicon-file"></i> Voltar</a> <br />
+						<hr>
+						<form name="relatorioForm" id="relatorioForm">
+							<!-- DATA INICIAL -->
+							<div class="row-fluid">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="data-inicial">Data Inicial</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</div>
+											<input ng-model="relatorio.dataInicial" ng-required="false" name="data-inicial" class="form-control" type="text" style="width: 90%;">
 										</div>
-										<input ng-model="relatorio.dataInicial" ng-required="false" name="data-inicial" class="form-control" type="text">
-									</div>									
+									</div>
 								</div>
-							</div>	
-							<!-- DATA FINAL -->
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="data-final">Data Final</label>
-									<div class="input-group">
-										<div class="input-group-addon">
-											<i class="glyphicon glyphicon-calendar"></i>
+								<!-- DATA FINAL -->
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="data-final">Data Final</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</div>
+											<input ng-model="relatorio.dataFinal" ng-required="false" name="data-final" class="form-control" type="text" style="width: 90%;">
 										</div>
-										<input ng-model="relatorio.dataFinal" ng-required="false" name="data-final" class="form-control" type="text">
-									</div>									
+									</div>
 								</div>
-							</div>		
-							<div class="col-md-4">
-								<label for="data-final" class="hidden-sm hidden-xs"><br></label>
-								<div class="input-group">					
-									<input ng-click="gerar_relatorio(consignacao_relatorio)" type="submit" class="btn btn-purple button-generate" value="Gerar Relatório">
-									<a ng-if="exibir_relatorio" ng-click="success()" href="data:text/csv;charset=utf-8,{{data}}" download="relatorio.csv" class="btn btn-default">Download</a>
+								<div class="col-md-4">
+									<label for="data-final" class="hidden-sm hidden-xs"><br></label>
+									<div class="input-group">
+										<input ng-click="gerar_relatorio(consignacao_relatorio)" type="submit" class="btn btn-purple button-generate" value="Gerar Relatório"> <a ng-if="exibir_relatorio" ng-click="success()" href="data:text/csv;charset=utf-8,{{data}}" download="relatorio.csv" class="btn btn-default button-export">Download</a>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
-
-					<div ng-if="exibir_relatorio" style="margin-top: 25px;">
-						<div ng-if="!relatorio.dataInicial || !relatorio.dataFinal">
-							<div class="col-md-12"><p>Favor preencher a Data Inicial e a Data Final</p></div>
-						</div>
-						<div ng-if="relatorio.dataInicial && relatorio.dataFinal">
-							<div ng-if="!consignacoes_itens">
-								<div class="col-md-12"><p>Não há dados para exibir!</p></div>
+						</form>
+						<div ng-if="exibir_relatorio" style="margin-top: 25px;">
+							<div ng-if="!relatorio.dataInicial || !relatorio.dataFinal">
+								<div class="col-md-12">
+									<p>Favor preencher a Data Inicial e a Data Final</p>
+								</div>
 							</div>
-							<div ng-if="consignacoes_itens">
-								<table width="100%" >
-									<tr>
-										<th class="hidden-sm hidden-xs">Data</th>
-										<th>Cliente</th>
-										<th>Item</th>
-										<th class="hidden-xs">Pedido</th>
-										<th>Vendido</th>
-										<th>Preço</th>
-										<th>Total</th>
-									</tr>
-									<tr ng-repeat="item in consignacoes_itens">
-										<td class="hidden-sm hidden-xs">{{item.date}}</td>
-										<td>{{item.customerName}}</td>
-										<td>{{item.nameProduct}}</td>
-										<td class="hidden-xs">{{item.ordered}}</td>
-										<td>{{item.sold}}</td>
-										<td>{{item.unityPrice | currency:"R$ ":2}}</td>
-										<td>{{item.unityPrice * item.sold | currency:"R$ ":2}}</td>
-									</tr>
-								</table>
+							<div ng-if="relatorio.dataInicial && relatorio.dataFinal">
+								<div ng-if="!consignacoes_itens">
+									<div class="col-md-12">
+										<p>Não há dados para exibir!</p>
+									</div>
+								</div>
+								<div ng-if="consignacoes_itens">
+									<table width="100%">
+										<tr>
+											<th class="hidden-sm hidden-xs">Data</th>
+											<th>Cliente</th>
+											<th>Item</th>
+											<th class="hidden-xs">Pedido</th>
+											<th>Vendido</th>
+											<th>Preço</th>
+											<th>Total</th>
+										</tr>
+										<tr ng-repeat="item in consignacoes_itens">
+											<td class="hidden-sm hidden-xs">{{item.date}}</td>
+											<td>{{item.customerName}}</td>
+											<td>{{item.nameProduct}}</td>
+											<td class="hidden-xs">{{item.ordered}}</td>
+											<td>{{item.sold}}</td>
+											<td>{{item.unityPrice | currency:"R$ ":2}}</td>
+											<td>{{item.unityPrice * item.sold | currency:"R$ ":2}}</td>
+										</tr>
+									</table>
+								</div>
 							</div>
 						</div>
-					</div>	
-				</div><!-- /col-12 -->
-			</div><!-- /padding -->
-		</div> <!--main-->
-	</div><!--row-->
-</div> <!--box-->
+					</div>
+					<!-- /col-12 -->
+				</div>
+				<!-- /padding -->
+			</div>
+			<!--main-->
+		</div>
+		<!--row-->
+	</div>
+	<!--box-->
 </body>
 </html>
-

@@ -2,76 +2,66 @@
 <html ng-app="login">
 <head>
 <title>purpleFitness</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <!-- Latest compiled and minified JavaScript -->
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<!-- CABEÇALHO -->
+<!-- CABEï¿½ALHO -->
 <body ng-controller="LoginController">
 	<div class="wrapper">
-	  <header class="header header-fixed navbar container-fluid">
-	    <nav class="navbar navbar-default">
-                <a href="index.html" class="navbar-brand">
-                    <i class="glyphicon glyphicon-heart-empty"></i>
-                    <span class="heading-font">PurpleFitness</span>
-                </a>
-         </nav>
-      </header>
-    </div>
-		<!-- FORMULÁRIO DO PRODUTO -->
-	<!-- CATEGORIA -->
-
-	<div class="box" style="">
-     	<div class="row">
-     		<div class="column col-sm-12" id="main">
-          		<div class="padding">
-	<form name="loginForm" id="loginForm">
-	<br><br><br><br><br>
- 	<div class="column col-sm-4">
- 	</div>
-	 <div class="column col-sm-4">
-		<div class="form-group" ng-class="{'has-error':loginForm.usuario.$invalid && loginForm.usuario.$touched}">
-  			<div class="input-group">
-    			<div class="input-group-addon">
-      				<i class="glyphicon glyphicon-user"></i>
-    			</div>
-    			<input ng-model="login.usuario" ng-required="true" name="usuario" id="usuario" class="form-control" type="text" placeholder="Usuário">
-    			<span ng-if="loginForm.usuario.$invalid && loginForm.usuario.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  			</div>
-  			<span ng-if="loginForm.usuario.$invalid && loginForm.usuario.$touched" class="help-block">O usuário é requerido.</span>
-		</div>
-		<div class="form-group" ng-class="{'has-error':loginForm.senha.$invalid && loginForm.senha.$touched}">
-  			<div class="input-group">
-    			<div class="input-group-addon">
-      				<i class="glyphicon glyphicon-asterisk"></i>
-    			</div>
-    			<input ng-model="login.senha" ng-required="true" name="senha" id="senha" class="form-control" type="password" placeholder="Senha">
-    			<span ng-if="loginForm.senha.$invalid && loginForm.senha.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
-  			</div>
-  			<span ng-if="loginForm.senha.$invalid && loginForm.senha.$touched" class="help-block">A senha é requerida.</span>
-		</div>
-	<div class="form-group">
-		<div class="modal-footer">
-			<input ng-click="save(login)" type="submit" class="btn btn-purple" value="Salvar">
-		</div>
+		<header class="header header-fixed navbar container-fluid">
+			<nav class="navbar navbar-default">
+				<a href="index.html" class="navbar-brand"> <i class="glyphicon glyphicon-heart-empty"></i> <span class="heading-font">PurpleFitness</span>
+				</a>
+			</nav>
+		</header>
 	</div>
-</div>
-</form>
+	<!-- FORMULï¿½RIO DO PRODUTO -->
+	<!-- CATEGORIA -->
+	<div class="box" style="">
+		<div class="row">
+			<div class="column col-sm-12" id="main">
+				<div class="padding">
+					<form name="loginForm" id="loginForm">
+						<br> <br> <br> <br> <br>
+						<div class="column col-sm-4"></div>
+						<div class="column col-sm-4">
+							<div class="form-group" ng-class="{'has-error':loginForm.usuario.$invalid && loginForm.usuario.$touched}">
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="glyphicon glyphicon-user"></i>
+									</div>
+									<input ng-model="login.usuario" ng-required="true" name="usuario" id="usuario" class="form-control" type="text" placeholder="Usuï¿½rio"> <span ng-if="loginForm.usuario.$invalid && loginForm.usuario.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+								</div>
+								<span ng-if="loginForm.usuario.$invalid && loginForm.usuario.$touched" class="help-block">O usuï¿½rio ï¿½ requerido.</span>
+							</div>
+							<div class="form-group" ng-class="{'has-error':loginForm.senha.$invalid && loginForm.senha.$touched}">
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="glyphicon glyphicon-asterisk"></i>
+									</div>
+									<input ng-model="login.senha" ng-required="true" name="senha" id="senha" class="form-control" type="password" placeholder="Senha"> <span ng-if="loginForm.senha.$invalid && loginForm.senha.$touched" class="glyphicon glyphicon-remove form-control-feedback"></span>
+								</div>
+								<span ng-if="loginForm.senha.$invalid && loginForm.senha.$touched" class="help-block">A senha ï¿½ requerida.</span>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<input ng-click="save(login)" type="submit" class="btn btn-purple" value="Salvar">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</td>
-</tr>
-</table>
+	</td>
+	</tr>
+	</table>
 </body>
 </html>

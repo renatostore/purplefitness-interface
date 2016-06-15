@@ -8,11 +8,11 @@
     .factory('Item', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/product/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/product/search');
                 
             },
             add:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/product/add', {
+                return $http.post('https://localhost:8443/purplefitness/rest/product/add', {
                         name:item.name,
                         unity:item.unity,
                         price:item.price,
@@ -20,7 +20,7 @@
                 });
             },
             update:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/product/update', {
+                return $http.post('https://localhost:8443/purplefitness/rest/product/update', {
                         name:item.name,
                         unity:item.unity,
                         price:item.price,
@@ -28,7 +28,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/product/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/product/remove', {
                         name:item.name,
                         unity:item.unity,
                         price:item.price,

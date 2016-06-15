@@ -8,11 +8,11 @@
     .factory('Cliente', function($http) {
         return {
             getAll:function() {
-                return $http.get('https://177.220.84.127:8443/purplefitness/rest/customer/search');
+                return $http.get('https://localhost:8443/purplefitness/rest/customer/search');
                 
             },
             add:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/customer/add', {
+                return $http.post('https://localhost:8443/purplefitness/rest/customer/add', {
                         cnpj:item.cnpj,
                         corporateName:item.corporateName,
                         address:item.address,
@@ -25,7 +25,7 @@
                 });
             },
             update:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/customer/update', {
+                return $http.post('https://localhost:8443/purplefitness/rest/customer/update', {
                      cnpj:item.cnpj,
                         corporateName:item.corporateName,
                         address:item.address,
@@ -38,7 +38,7 @@
                 });
             },
             remove:function(item) {
-                return $http.post('https://177.220.84.127:8443/purplefitness/rest/customer/remove', {
+                return $http.post('https://localhost:8443/purplefitness/rest/customer/remove', {
                         cnpj:item.cnpj,
                         corporateName:item.corporateName,
                         address:item.address,
